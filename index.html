@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تسجيل المتربصين</title><style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #eef3f8;
+        margin: 0;
+        padding: 15px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px #cccccc;
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #1769aa;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+    }
+
+    input, select, button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        box-sizing: border-box;
+        border-radius: 7px;
+        font-size: 16px;
+    }
+
+    input, select {
+        border: 1px solid #cccccc;
+    }
+
+    button {
+        background: #1769aa;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:active {
+        opacity: 0.8;
+    }
+
+    .delete-button {
+        background: #d93025;
+        padding: 8px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 15px;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background: #1769aa;
+        color: white;
+    }
+
+    #message {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .count {
+        text-align: center;
+        margin-top: 15px;
+        color: #1769aa;
+    }
+</style>
+
+</head><body><div class="container"><h1>🎓 تسجيل المتربصين</h1>
+<p style="text-align:center;">نظام تجريبي لتسيير المتربصين</p>
+
+<h2>إضافة متربص</h2>
+
+<label for="nom">الاسم واللقب:</label>
+<input
+    type="text"
+    id="nom"
+    placeholder="أدخل الاسم واللقب"
+>
+
+<label for="age">العمر:</label>
+<input
+    type="number"
+    id="age"
+    min="1"
+    max="120"
+    placeholder="أدخل العمر"
+>
+
+<label for="specialite">التخصص:</label>
+<select id="specialite">
+    <option value="إعلام آلي">إعلام آلي</option>
+    <option value="تسيير">تسيير</option>
+    <option value="محاسبة">محاسبة</option>
+    <option value="كهرباء">كهرباء</option>
+    <option value="ميكانيك">ميكانيك</option>
+</select>
+
+<button type="button" onclick="ajouter()">
+    تسجيل المتربص
+</button>
+
+<p id="message" role="status"></p>
+
+<hr>
+
+<h2>قائمة المتربصين</h2>
+
+<label for="recherche">البحث عن متربص:</label>
+<input
+    type="search"
+    id="recherche"
+    placeholder="اكتب الاسم للبحث..."
+    oninput="afficher()"
+>
+
+<p class="count" id="count"></p>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم واللقب</th>
+                <th>العمر</th>
+                <th>التخصص</th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+
+        <tbody id="liste"></tbody>
+    </table>
+</div>
+
+</div><script>
+    let stagiaires = [];
+
+    // تحميل المعلومات المحفوظة
+    try {
+        const donnees = localStorage.getItem("stagiaires");
+
+        if (donnees) {
+            const resultat = JSON.parse(donnees);
+
+            if (Array.isArray(resultat)) {
+                stagiaires = resultat;
+            }
+        }
+    } catch (erreur) {
+        stagiaires = [];
+    }
+
+    // حفظ المعلومات في المتصفح
+    function sauvegarder() {
+        try {
+            localStorage.setItem(
+                "stagiaires",
+                JSON.stringify(stagiaires)
+            );
+
+            return true;
+        } catch (erreur) {
+            return false;
+        }
+    }
+
+    // عرض المتربصين والبحث عنهم
+    function afficher() {
+        const liste = document.getElementById("liste");
+        const recherche = document
+            .getElementById("recherche")
+            .value.trim()
+            .toLowerCase();
+
+        liste.replaceChildren();
+
+        let nombre = 0;
+
+        stagiaires.forEach(function(s, index) {
+            if (!s.nom.toLowerCase().includes(recherche)) {
+                return;
+            }
+
+            const ligne = document.createElement("tr");
+
+            [s.nom, s.age, s.specialite].forEach(function(valeur) {
+                const cellule = document.createElement("td");
+                cellule.textContent = valeur;
+                ligne.appendChild(cellule);
+            });
+
+            const celluleAction = document.createElement("td");
+            const bouton = document.createElement("button");
+
+            bouton.textContent = "حذف";
+            bouton.className = "delete-button";
+
+            bouton.onclick = function() {
+                supprimer(index);
+            };
+
+            celluleAction.appendChild(bouton);
+            ligne.appendChild(celluleAction);
+            liste.appendChild(ligne);
+
+            nombre++;
+        });
+
+        document.getElementById("count").textContent =
+            "عدد النتائج: " + nombre;
+    }
+
+    // إضافة متربص جديد
+    function ajouter() {
+        const nom = document.getElementById("nom").value.trim();
+        const ageTexte = document.getElementById("age").value;
+        const age = Number(ageTexte);
+        const specialite = document.getElementById("specialite").value;
+        const message = document.getElementById("message");
+
+        if (nom === "") {
+            message.style.color = "red";
+            message.textContent = "أدخل الاسم واللقب!";
+            return;
+        }
+
+        if (
+            ageTexte === "" ||
+            !Number.isInteger(age) ||
+            age < 1 ||
+            age > 120
+        ) {
+            message.style.color = "red";
+            message.textContent = "أدخل عمراً صحيحاً!";
+            return;
+        }
+
+        const nouveau = {
+            nom: nom,
+            age: age,
+            specialite: specialite
+        };
+
+        stagiaires.push(nouveau);
+
+        if (!sauvegarder()) {
+            stagiaires.pop();
+            message.style.color = "red";
+            message.textContent = "تعذر الحفظ في المتصفح!";
+            return;
+        }
+
+        document.getElementById("nom").value = "";
+        document.getElementById("age").value = "";
+
+        message.style.color = "green";
+        message.textContent = "تم تسجيل المتربص بنجاح!";
+
+        afficher();
+    }
+
+    // حذف متربص
+    function supprimer(index) {
+        const موافق = confirm("هل تريد حذف هذا المتربص؟");
+
+        if (!موافق) {
+            return;
+        }
+
+        const المحذوف = stagiaires.splice(index, 1)[0];
+
+        if (!sauvegarder()) {
+            stagiaires.splice(index, 0, المحذوف);
+
+            alert("تعذر حفظ عملية الحذف!");
+            afficher();
+            return;
+        }
+
+        document.getElementById("message").textContent =
+            "تم حذف المتربص.";
+
+        afficher();
+    }
+
+    // عرض المعلومات عند فتح الصفحة
+    afficher();
+</script></body>
+</html>
