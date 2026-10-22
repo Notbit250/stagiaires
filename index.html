@@ -1,314 +1,981 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تسجيل المتربصين</title><style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #eef3f8;
-        margin: 0;
-        padding: 15px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الطالب DZ | Étudiant DZ</title>
+
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-light:#eff6ff;
+  --bg:#ffffff;
+  --soft:#f7f8fa;
+  --text:#252525;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Tahoma,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.9;
+}
+header{
+  border-bottom:1px solid var(--border);
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.logo{font-size:21px;font-weight:bold;color:var(--blue)}
+button,input{font:inherit}
+button{
+  cursor:pointer;
+  border:1px solid var(--border);
+  background:white;
+  color:var(--text);
+  border-radius:8px;
+  padding:9px 14px;
+}
+button:hover{border-color:var(--blue)}
+.primary{
+  background:var(--blue);
+  color:white;
+  border-color:var(--blue);
+}
+main{max-width:1000px;margin:auto;padding:24px 16px}
+h1,h2,h3{line-height:1.5}
+.muted{color:var(--muted)}
+.search{
+  width:100%;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  margin:15px 0;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;
+}
+.card{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px;
+  background:white;
+}
+.card h3{margin-top:0}
+.card button{width:100%;margin-top:10px}
+.badge{
+  display:inline-block;
+  background:var(--blue-light);
+  color:var(--blue);
+  padding:3px 10px;
+  border-radius:5px;
+  font-size:13px;
+}
+.lesson-text{font-size:17px}
+.lesson-section{
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+}
+pre{
+  direction:ltr;
+  text-align:left;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  background:#f3f4f6;
+  color:#202020;
+  padding:15px;
+  border-radius:8px;
+  overflow-x:auto;
+  font-size:14px;
+}
+.output{
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  padding:12px;
+  border-radius:8px;
+}
+.note{
+  background:var(--blue-light);
+  border-right:4px solid var(--blue);
+  padding:12px;
+  border-radius:5px;
+}
+.actions{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:20px 0;
+}
+.actions button{flex:1;min-width:90px}
+.hidden{display:none!important}
+footer{
+  border-top:1px solid var(--border);
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+}
+body.dark{
+  --bg:#15171a;
+  --soft:#202328;
+  --text:#f3f4f6;
+  --muted:#a1a1aa;
+  --border:#35383f;
+  --blue-light:#1e293b;
+}
+body.dark .card,body.dark button{background:#202328;color:var(--text)}
+body.dark .primary{background:var(--blue);color:white}
+body.dark pre{background:#24272d;color:#f3f4f6}
+body.dark .output{background:#14251b;color:#e5f7eb}
+@media(max-width:500px){
+  header{padding:12px}
+  main{padding:18px 13px}
+  .lesson-text{font-size:16px}
+  .actions button{padding:9px 5px}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">الطالب DZ</div>
+  <div>
+    <button id="homeButton">الرئيسية</button>
+    <button id="themeButton">🌙</button>
+  </div>
+</header>
+
+<main>
+<section id="homePage">
+  <h1>مرحباً بك في الطالب DZ</h1>
+  <p class="muted">تعلّم الإعلام الآلي خطوة بخطوة، من الأساسيات إلى المشاريع التطبيقية.</p>
+  <input id="search" class="search" placeholder="ابحث عن مادة..." aria-label="ابحث عن مادة">
+  <div id="subjects" class="grid"></div>
+</section>
+
+<section id="coursePage" class="hidden">
+  <button id="backSubjects">← رجوع للمواد</button>
+  <h1 id="courseTitle"></h1>
+  <p class="muted">اختر درساً لبدء التعلّم. تقدمك محفوظ على هذا الجهاز عند الضغط على حفظ.</p>
+  <div id="lessonList" class="grid"></div>
+</section>
+
+<section id="lessonPage" class="hidden">
+  <button id="backLessons">← رجوع للدروس</button>
+  <div class="badge" id="lessonNumber"></div>
+  <h1 id="lessonTitle"></h1>
+  <div id="lessonContent" class="lesson-text"></div>
+  <div class="actions">
+    <button id="prevLesson">⬅️ رجوع</button>
+    <button id="saveLesson" class="primary">💾 حفظ التقدم</button>
+    <button id="nextLesson">تقدّم ➡️</button>
+  </div>
+  <p id="saveMessage" class="muted" aria-live="polite"></p>
+</section>
+</main>
+
+<footer>
+  الطالب DZ | Étudiant DZ<br>
+  إعداد: هاني دوفة
+</footer>
+
+<script>
+const courses = [
+{
+ id:"java", name:"Java", desc:"تعلم البرمجة بلغة Java",
+ lessons:[
+  {
+   title:"مقدمة في Java",
+   theory:`Java لغة برمجة تُستخدم في بناء تطبيقات الحاسوب والخوادم وأنواع مختلفة من البرامج. تعتمد على كتابة تعليمات يفهمها المترجم ثم ينفذها الحاسوب عبر بيئة تشغيل Java.
+
+قبل البرمجة، افهم الفرق بين الكود المصدري والبرنامج المنفّذ: الكود المصدري هو ما تكتبه، أما التنفيذ فهو تشغيل التعليمات للحصول على نتيجة.`,
+   code:`public class Main {
+    public static void main(String[] args) {
+        System.out.println("Salam Java");
+    }
+}`,
+   explain:[
+    "public class Main: تعريف صنف اسمه Main.",
+    "main: نقطة بداية تنفيذ البرنامج.",
+    "System.out.println: طباعة نص على الشاشة.",
+    "النص بين علامتي الاقتباس هو ما سيظهر."
+   ],
+   output:"Salam Java",
+   exercise:"غيّر النص ليصبح: Salam Algeria"
+  },
+  {
+   title:"المتغيرات وأنواع البيانات",
+   theory:`المتغير مساحة باسم محدد نضع فيها قيمة نستعملها أثناء تنفيذ البرنامج. كل متغير في Java له نوع يحدد طبيعة القيمة التي يقبلها.
+
+int للأعداد الصحيحة، double للأعداد العشرية، char لحرف واحد، boolean للقيمتين true وfalse، وString للنصوص.
+
+يجب تعريف المتغير قبل استعماله، واختيار اسم واضح يساعد على فهم البرنامج.`,
+   code:`public class Main {
+    public static void main(String[] args) {
+        int age = 21;
+        double price = 150.5;
+        String name = "Hani";
+        boolean student = true;
+
+        System.out.println(name);
+        System.out.println(age);
+        System.out.println(price);
+        System.out.println(student);
+    }
+}`,
+   explain:[
+    "int age = 21; إنشاء متغير صحيح اسمه age.",
+    "double price = 150.5; تخزين عدد عشري.",
+    "String name = \"Hani\"; تخزين نص.",
+    "boolean student = true; تخزين قيمة منطقية.",
+    "كل سطر println يطبع قيمة المتغير."
+   ],
+   output:"Hani\n21\n150.5\ntrue",
+   exercise:"أنشئ متغيراً باسم city من نوع String وضع فيه اسم مدينتك، ثم اطبعه."
+  },
+  {
+   title:"العمليات الحسابية",
+   theory:`تسمح العمليات الحسابية بإجراء الحسابات على الأعداد. + للجمع، - للطرح، * للضرب، / للقسمة، و% لباقي القسمة.
+
+انتبه: عندما يكون العددان من نوع int فإن القسمة قد تعطي نتيجة صحيحة فقط دون الجزء العشري. استخدم double إذا احتجت نتيجة عشرية.`,
+   code:`int a = 10;
+int b = 3;
+
+System.out.println(a + b);
+System.out.println(a - b);
+System.out.println(a * b);
+System.out.println(a / b);
+System.out.println(a % b);`,
+   explain:[
+    "a + b: جمع العددين.",
+    "a - b: حساب الفرق.",
+    "a * b: الضرب.",
+    "a / b: قسمة صحيحة لأن العددين int.",
+    "a % b: باقي القسمة."
+   ],
+   output:"13\n7\n30\n3\n1",
+   exercise:"أنشئ متغيرين، ثم اطبع مجموعهما وحاصل ضربهما."
+  },
+  {
+   title:"الشروط if و else",
+   theory:`نستعمل if لتنفيذ تعليمات عندما يكون شرط معين صحيحاً. أما else فتنفذ عندما لا يتحقق الشرط.
+
+من المقارنات المهمة: == للمساواة، != للاختلاف، > أكبر من، < أصغر من، >= أكبر أو يساوي، و<= أصغر أو يساوي.
+
+لا تخلط بين = التي تسند قيمة للمتغير و== التي تقارن قيمتين.`,
+   code:`int mark = 14;
+
+if (mark >= 10) {
+    System.out.println("ناجح");
+} else {
+    System.out.println("راسب");
+}`,
+   explain:[
+    "mark = 14: تخزين العلامة.",
+    "if (mark >= 10): اختبار هل العلامة 10 أو أكثر.",
+    "إذا تحقق الشرط تطبع ناجح.",
+    "وإلا تنفذ كتلة else وتطبع راسب."
+   ],
+   output:"ناجح",
+   exercise:"اكتب شرطاً يطبع «مقبول» إذا كانت العلامة 10 أو أكثر، و«غير مقبول» خلاف ذلك."
+  },
+  {
+   title:"الحلقات التكرارية",
+   theory:`الحلقة التكرارية تسمح بتنفيذ مجموعة تعليمات عدة مرات. حلقة for مفيدة عندما تعرف عدد التكرارات تقريباً، أما while فتستمر ما دام الشرط صحيحاً.
+
+في for توجد عادة ثلاث مراحل: التهيئة، الشرط، ثم تحديث المتغير بعد كل دورة.`,
+   code:`for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}`,
+   explain:[
+    "int i = 1: البداية من العدد 1.",
+    "i <= 5: تستمر الحلقة ما دام i لا يتجاوز 5.",
+    "i++: زيادة i بمقدار واحد بعد كل دورة.",
+    "println(i): طباعة العدد الحالي."
+   ],
+   output:"1\n2\n3\n4\n5",
+   exercise:"عدّل الحلقة لتطبع الأعداد من 1 إلى 10."
+  },
+  {
+   title:"المصفوفات Arrays",
+   theory:`المصفوفة تخزن مجموعة عناصر من النوع نفسه تحت اسم واحد. يبدأ فهرس العنصر الأول في Java من الصفر، لذلك إذا احتوت المصفوفة على 3 عناصر فإن فهارسها هي 0 و1 و2.
+
+يمكن استعمال length لمعرفة عدد العناصر.`,
+   code:`int[] numbers = {10, 20, 30};
+
+System.out.println(numbers[0]);
+System.out.println(numbers.length);`,
+   explain:[
+    "int[] numbers: تعريف مصفوفة أعداد صحيحة.",
+    "{10, 20, 30}: القيم الثلاث.",
+    "numbers[0]: الوصول إلى أول عنصر.",
+    "numbers.length: عدد العناصر."
+   ],
+   output:"10\n3",
+   exercise:"أنشئ مصفوفة فيها الأعداد 4 و8 و12، واطبع العنصر الثاني."
+  },
+  {
+   title:"الدوال Methods",
+   theory:`الدالة مجموعة تعليمات لها اسم، ويمكن استدعاؤها كلما احتجنا تنفيذها. قد تستقبل الدالة مدخلات تسمى parameters وقد تعيد قيمة باستعمال return.
+
+void تعني أن الدالة لا تعيد قيمة.`,
+   code:`public class Main {
+    static int sum(int a, int b) {
+        return a + b;
     }
 
-    .container {
-        max-width: 600px;
-        margin: 20px auto;
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px #cccccc;
+    public static void main(String[] args) {
+        System.out.println(sum(4, 6));
+    }
+}`,
+   explain:[
+    "static int sum: تعريف دالة تعيد عدداً صحيحاً.",
+    "a وb: المعاملات التي تستقبلها الدالة.",
+    "return a + b: إرجاع مجموع العددين.",
+    "sum(4, 6): استدعاء الدالة بالقيمتين 4 و6."
+   ],
+   output:"10",
+   exercise:"أنشئ دالة تعيد حاصل ضرب عددين صحيحين."
+  },
+  {
+   title:"الصنف والكائن OOP",
+   theory:`البرمجة كائنية التوجه تنظّم البرنامج حول الأصناف والكائنات. الصنف Class يحدد الخصائص والسلوكيات، أما الكائن Object فهو نسخة من الصنف.
+
+الخصائص تمثل البيانات، والدوال داخل الصنف تمثل السلوكيات.`,
+   code:`class Student {
+    String name;
+
+    Student(String n) {
+        name = n;
     }
 
-    h1, h2 {
-        text-align: center;
-        color: #1769aa;
+    void introduce() {
+        System.out.println("أنا " + name);
     }
+}
 
-    label {
-        display: block;
-        margin-top: 15px;
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student("Hani");
+        s.introduce();
     }
+}`,
+   explain:[
+    "class Student: تعريف صنف الطالب.",
+    "String name: خاصية تخزن الاسم.",
+    "Student(String n): مُنشئ يستقبل الاسم.",
+    "introduce(): دالة تعرض الاسم.",
+    "new Student(\"Hani\"): إنشاء كائن."
+   ],
+   output:"أنا Hani",
+   exercise:"أضف خاصية age إلى Student واطبعها."
+  },
+  {
+   title:"الوراثة Inheritance",
+   theory:`الوراثة تسمح لصنف جديد بالاستفادة من خصائص ودوال صنف موجود. نستخدم extends لتحديد الصنف الأب.
 
-    input, select, button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 8px;
-        box-sizing: border-box;
-        border-radius: 7px;
-        font-size: 16px;
+تساعد الوراثة على إعادة استخدام الكود، لكن يجب استعمالها عندما توجد علاقة منطقية بين الصنفين.`,
+   code:`class Animal {
+    void sound() {
+        System.out.println("صوت حيوان");
     }
+}
 
-    input, select {
-        border: 1px solid #cccccc;
-    }
+class Cat extends Animal {
+}
 
-    button {
-        background: #1769aa;
-        color: white;
-        border: none;
-        cursor: pointer;
+public class Main {
+    public static void main(String[] args) {
+        Cat c = new Cat();
+        c.sound();
     }
+}`,
+   explain:[
+    "Animal هو الصنف الأب.",
+    "Cat extends Animal تعني أن Cat يرث من Animal.",
+    "الكائن c يستطيع استعمال الدالة sound الموروثة."
+   ],
+   output:"صوت حيوان",
+   exercise:"أنشئ صنف Dog يرث من Animal."
+  },
+  {
+   title:"معالجة الأخطاء Exceptions",
+   theory:`تساعد try وcatch على التعامل مع بعض الأخطاء وقت التنفيذ حتى لا يتوقف البرنامج بطريقة غير معالجة. نضع التعليمات المحتمل أن تسبب استثناء داخل try، ثم نحدد طريقة التعامل معه داخل catch.
 
-    button:active {
-        opacity: 0.8;
-    }
+معالجة الاستثناء لا تعني تجاهل كل الأخطاء؛ يجب فهم سبب المشكلة واختيار معالجة مناسبة.`,
+   code:`try {
+    int result = 10 / 0;
+    System.out.println(result);
+} catch (ArithmeticException e) {
+    System.out.println("لا يمكن القسمة على صفر");
+}`,
+   explain:[
+    "try: بداية الجزء الذي قد يحدث فيه الاستثناء.",
+    "10 / 0: عملية غير مسموح بها في الأعداد الصحيحة.",
+    "catch: استقبال الاستثناء المحدد.",
+    "تطبع الرسالة بدلاً من ترك الاستثناء دون معالجة."
+   ],
+   output:"لا يمكن القسمة على صفر",
+   exercise:"جرّب قسمة عدد على صفر داخل try/catch."
+  }
+ ]
+},
+{
+ id:"sql",name:"SQL وقواعد البيانات",desc:"تعلم إنشاء قواعد البيانات والاستعلام عنها",
+ lessons:[
+  {
+   title:"مقدمة في قواعد البيانات",
+   theory:`قاعدة البيانات مجموعة منظمة من المعلومات. نظام إدارة قواعد البيانات DBMS يسمح بإنشاء البيانات وتنظيمها والبحث فيها وتعديلها.
 
-    .delete-button {
-        background: #d93025;
-        padding: 8px;
-    }
+في قاعدة بيانات المتربصين، يمكن إنشاء جدول للمتربصين يحتوي على رقم واسم وتخصص. كل صف يمثل متربصاً، وكل عمود يمثل خاصية.`,
+   code:`CREATE TABLE trainees (
+  id INT PRIMARY KEY,
+  name VARCHAR(100),
+  specialty VARCHAR(100)
+);`,
+   explain:[
+    "CREATE TABLE: إنشاء جدول جديد.",
+    "trainees: اسم الجدول.",
+    "id INT: عمود رقم صحيح.",
+    "PRIMARY KEY: مفتاح أساسي يميز السجل.",
+    "VARCHAR(100): نص يصل إلى 100 حرف."
+   ],
+   output:"ينشئ جدولاً باسم trainees إذا كانت بيئة SQL تدعم الصيغة.",
+   exercise:"اقترح عمودين إضافيين لجدول المتربصين."
+  },
+  {
+   title:"إضافة البيانات INSERT",
+   theory:`نستخدم INSERT INTO لإضافة سجل جديد إلى جدول. يجب أن تتوافق القيم مع الأعمدة وأنواع بياناتها.
 
-    .table-container {
-        overflow-x: auto;
-    }
+النصوص عادة توضع بين علامتي اقتباس مفردتين.`,
+   code:`INSERT INTO trainees (id, name, specialty)
+VALUES (1, 'Hani', 'Database');`,
+   explain:[
+    "INSERT INTO trainees: الإضافة إلى جدول المتربصين.",
+    "قائمة الأعمدة تحدد أماكن القيم.",
+    "VALUES تحدد القيم التي ستضاف.",
+    "كل قيمة تقابل العمود الذي يقع في الموضع نفسه."
+   ],
+   output:"إضافة سجل واحد إذا كانت البيانات صحيحة ولم يحدث تعارض في المفتاح.",
+   exercise:"أضف متربصاً آخر برقم مختلف."
+  },
+  {
+   title:"عرض البيانات SELECT",
+   theory:`SELECT تسترجع بيانات من جدول. الرمز * يعني اختيار كل الأعمدة. يمكن تحديد أعمدة بعينها لتجنب عرض بيانات غير ضرورية.`,
+   code:`SELECT name, specialty
+FROM trainees;`,
+   explain:[
+    "SELECT يحدد الأعمدة المطلوب عرضها.",
+    "name, specialty: عرض الاسم والتخصص.",
+    "FROM trainees: جلب البيانات من الجدول."
+   ],
+   output:"يعرض عمودي الاسم والتخصص لكل السجلات.",
+   exercise:"اكتب استعلاماً يعرض جميع أعمدة trainees."
+  },
+  {
+   title:"التصفية WHERE",
+   theory:`WHERE تحدد الشرط الذي يجب أن يحققه السجل حتى يظهر في النتيجة. يمكن استعمال = و<> و> و< وLIKE وغيرها بحسب نوع البيانات ونظام قاعدة البيانات.`,
+   code:`SELECT *
+FROM trainees
+WHERE specialty = 'Database';`,
+   explain:[
+    "SELECT *: اختيار كل الأعمدة.",
+    "FROM trainees: مصدر البيانات.",
+    "WHERE specialty = 'Database': إظهار السجلات التي تخصصها Database."
+   ],
+   output:"يعرض المتربصين الذين يطابق تخصصهم القيمة المحددة.",
+   exercise:"اكتب استعلاماً للبحث عن المتربص ذي الرقم 1."
+  },
+  {
+   title:"تعديل البيانات UPDATE",
+   theory:`UPDATE تعدل بيانات موجودة. يجب الانتباه إلى WHERE، لأن حذف الشرط قد يؤدي إلى تعديل جميع السجلات في الجدول.`,
+   code:`UPDATE trainees
+SET specialty = 'SQL'
+WHERE id = 1;`,
+   explain:[
+    "UPDATE trainees: تحديد الجدول.",
+    "SET: تعيين القيمة الجديدة.",
+    "WHERE id = 1: حصر التعديل في السجل ذي الرقم 1."
+   ],
+   output:"تعديل تخصص السجل المطابق إذا كان موجوداً.",
+   exercise:"غيّر اسم المتربص ذي الرقم 1."
+  },
+  {
+   title:"الربط JOIN",
+   theory:`JOIN يربط بيانات من جدولين بناءً على علاقة بينهما. مثلاً يمكن أن يحتوي جدول trainees على بيانات المتربصين وجدول groups على معلومات الأفواج، ويشتركان في رقم الفوج.`,
+   code:`SELECT trainees.name, groups.group_name
+FROM trainees
+JOIN groups
+ON trainees.group_id = groups.id;`,
+   explain:[
+    "SELECT: اختيار الاسم واسم الفوج.",
+    "FROM trainees: بدء الاستعلام من جدول المتربصين.",
+    "JOIN groups: ربط جدول الأفواج.",
+    "ON: تحديد شرط الربط بين العمودين."
+   ],
+   output:"يعرض اسم كل متربص مع اسم الفوج المطابق.",
+   exercise:"ما العمودان اللذان يجب أن يرتبطا حتى ينجح هذا الاستعلام؟"
+  }
+ ]
+},
+{
+ id:"html",name:"HTML وCSS",desc:"إنشاء صفحات الويب وتنسيقها",
+ lessons:[
+  {
+   title:"بنية صفحة HTML",
+   theory:`HTML لغة توصيف تُستخدم لتحديد بنية محتوى صفحات الويب. العناصر تُكتب غالباً بوسم افتتاحي ووسم إغلاق.
 
-    table {
-        width: 100%;
-        margin-top: 15px;
-        border-collapse: collapse;
-        background: white;
-    }
-
-    th, td {
-        border: 1px solid #dddddd;
-        padding: 8px;
-        text-align: center;
-    }
-
-    th {
-        background: #1769aa;
-        color: white;
-    }
-
-    #message {
-        text-align: center;
-        font-weight: bold;
-    }
-
-    .count {
-        text-align: center;
-        margin-top: 15px;
-        color: #1769aa;
-    }
+CSS مسؤولة عن الشكل والألوان والتنسيق، أما JavaScript فتضيف التفاعل والسلوك.`,
+   code:`<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>صفحتي</title>
+</head>
+<body>
+  <h1>مرحبا</h1>
+  <p>هذه أول صفحة لي.</p>
+</body>
+</html>`,
+   explain:[
+    "DOCTYPE يحدد مستند HTML حديثاً.",
+    "html يحتوي كامل الصفحة.",
+    "head يحتوي معلومات الصفحة.",
+    "title يحدد عنوان التبويب.",
+    "body يحتوي المحتوى الظاهر.",
+    "h1 عنوان رئيسي وp فقرة."
+   ],
+   output:"صفحة فيها عنوان مرحبا وفقرة قصيرة.",
+   exercise:"غيّر العنوان والفقرة إلى نص من اختيارك."
+  },
+  {
+   title:"العناوين والفقرات والروابط",
+   theory:`تستخدم h1 إلى h6 للعناوين بمستويات مختلفة، وp للفقرات، وa لإنشاء رابط. الخاصية href تحدد وجهة الرابط.`,
+   code:`<h1>موقعي</h1>
+<p>أتعلم تصميم الويب.</p>
+<a href="https://example.com">زيارة الموقع</a>`,
+   explain:[
+    "h1 عنوان رئيسي.",
+    "p فقرة.",
+    "a عنصر الرابط.",
+    "href يحدد عنوان الصفحة المقصودة."
+   ],
+   output:"عنوان وفقرة ورابط قابل للنقر.",
+   exercise:"أنشئ رابطاً لموقع تختاره."
+  },
+  {
+   title:"تنسيق CSS",
+   theory:`CSS تحدد مظهر العناصر، مثل اللون والحجم والمسافات. يمكن كتابة التنسيق داخل وسم style أو في ملف منفصل.`,
+   code:`<style>
+h1 {
+  color: blue;
+}
+p {
+  font-size: 18px;
+}
 </style>
 
-</head><body><div class="container"><h1>🎓 تسجيل المتربصين</h1>
-<p style="text-align:center;">نظام تجريبي لتسيير المتربصين</p>
-
-<h2>إضافة متربص</h2>
-
-<label for="nom">الاسم واللقب:</label>
-<input
-    type="text"
-    id="nom"
-    placeholder="أدخل الاسم واللقب"
->
-
-<label for="age">العمر:</label>
-<input
-    type="number"
-    id="age"
-    min="1"
-    max="120"
-    placeholder="أدخل العمر"
->
-
-<label for="specialite">التخصص:</label>
-<select id="specialite">
-    <option value="إعلام آلي">إعلام آلي</option>
-    <option value="تسيير">تسيير</option>
-    <option value="محاسبة">محاسبة</option>
-    <option value="كهرباء">كهرباء</option>
-    <option value="ميكانيك">ميكانيك</option>
-</select>
-
-<button type="button" onclick="ajouter()">
-    تسجيل المتربص
+<h1>مرحبا</h1>
+<p>أول تجربة CSS</p>`,
+   explain:[
+    "h1 هو المحدد الذي يختار العناوين.",
+    "color يحدد لون النص.",
+    "p يختار الفقرات.",
+    "font-size يحدد حجم الخط."
+   ],
+   output:"عنوان أزرق وفقرة بحجم خط 18 بكسل.",
+   exercise:"غيّر لون العنوان وحجم الخط."
+  },
+  {
+   title:"إنشاء زر تفاعلي",
+   theory:`يمكن استخدام JavaScript لتغيير محتوى الصفحة عند تفاعل المستخدم مع زر. نربط الحدث click بالزر ثم ننفذ التعليمات.`,
+   code:`<button onclick="document.getElementById('msg').textContent='أهلاً بك!'">
+اضغط هنا
 </button>
+<p id="msg">رسالة أولية</p>`,
+   explain:[
+    "button ينشئ زراً.",
+    "onclick ينفذ الكود عند النقر.",
+    "getElementById يبحث عن العنصر ذي المعرّف msg.",
+    "textContent يغير النص داخل الفقرة."
+   ],
+   output:"عند النقر على الزر تتغير الرسالة إلى أهلاً بك!",
+   exercise:"غيّر النص الذي يظهر بعد النقر."
+  }
+ ]
+},
+{
+ id:"uml",name:"UML",desc:"نمذجة وتحليل الأنظمة",
+ lessons:[
+  {
+   title:"مقدمة في UML",
+   theory:`UML لغة نمذجة موحدة تساعد على وصف الأنظمة قبل برمجتها. تستخدم الرسوم لتوضيح المستخدمين والوظائف والكائنات والعلاقات.
 
-<p id="message" role="status"></p>
+من أشهر المخططات: Use Case لحالات الاستخدام، Class Diagram للأصناف، وSequence Diagram لتسلسل الرسائل.`,
+   code:`نظام تسجيل المتربصين
 
-<hr>
+الممثل: موظف التسجيل
+حالة الاستخدام: تسجيل متربص
+حالة الاستخدام: تعديل بيانات متربص`,
+   explain:[
+    "الممثل Actor يمثل دوراً يتفاعل مع النظام.",
+    "حالة الاستخدام Use Case تمثل وظيفة يقدمها النظام.",
+    "يجب أن يوضح المخطط من يستخدم الوظائف."
+   ],
+   output:"وصف أولي لوظائف نظام تسجيل المتربصين.",
+   exercise:"حدد ممثلين ووظيفتين في نظام مكتبة."
+  },
+  {
+   title:"مخطط حالات الاستخدام",
+   theory:`يصف مخطط Use Case وظائف النظام من وجهة نظر المستخدم. يوضع النظام داخل حدود، والممثلون خارجه، وحالات الاستخدام داخله.
 
-<h2>قائمة المتربصين</h2>
+علاقة include تعني أن سلوكاً مشتركاً يُضمَّن في حالة استخدام أخرى. أما extend فتمثل سلوكاً إضافياً مشروطاً في حالات مناسبة.`,
+   code:`مثال نصي:
+الممثل: مسؤول المركز
+الوظائف:
+- تسجيل متربص
+- البحث عن متربص
+- تعديل معلوماته
+- طباعة قائمة المتربصين`,
+   explain:[
+    "حدد أولاً حدود النظام.",
+    "استخرج المستخدمين أو الأنظمة الخارجية.",
+    "اكتب الوظائف التي يحتاجها كل ممثل.",
+    "اربط كل ممثل بالوظائف التي يستعملها."
+   ],
+   output:"قائمة منظمة بالوظائف التي يمكن تحويلها إلى مخطط.",
+   exercise:"أضف وظيفة حذف متربص، وحدد من يملك صلاحية تنفيذها."
+  },
+  {
+   title:"مخطط الأصناف Class Diagram",
+   theory:`مخطط الأصناف يوضح أصناف النظام وخصائصها وعملياتها والعلاقات بينها. يتكون الصنف عادة من اسم وخصائص وعمليات.
 
-<label for="recherche">البحث عن متربص:</label>
-<input
-    type="search"
-    id="recherche"
-    placeholder="اكتب الاسم للبحث..."
-    oninput="afficher()"
->
+يستعمل هذا المخطط للمساعدة على تصميم بنية البرنامج أو قاعدة البيانات.`,
+   code:`صنف: Trainee
+الخصائص:
+- id : Integer
+- name : String
+- specialty : String
 
-<p class="count" id="count"></p>
+العمليات:
+- register()
+- updateInfo()`,
+   explain:[
+    "Trainee هو اسم الصنف.",
+    "id وname وspecialty خصائص.",
+    "register وupdateInfo عمليتان.",
+    "نوع البيانات يوضح نوع كل خاصية."
+   ],
+   output:"تصميم أولي لصنف المتربص.",
+   exercise:"اقترح صنفاً Group يحتوي على رقم الفوج واسمه."
+  }
+ ]
+},
+{
+ id:"merise",name:"Merise",desc:"تحليل وتصميم قواعد البيانات",
+ lessons:[
+  {
+   title:"مقدمة في Merise",
+   theory:`Merise منهجية لتحليل وتصميم نظم المعلومات، وتُستخدم خصوصاً في تنظيم البيانات والعمليات.
 
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>الاسم واللقب</th>
-                <th>العمر</th>
-                <th>التخصص</th>
-                <th>حذف</th>
-            </tr>
-        </thead>
+من مراحل تصميم البيانات: فهم المجال، تحديد الكيانات والعلاقات، بناء النموذج المفاهيمي للبيانات MCD، ثم تحويله إلى نموذج منطقي MLD.`,
+   code:`مثال:
+الكيان: TRAINEE
+الخصائص: IdTrainee, Name
+الكيان: GROUP
+الخصائص: IdGroup, NameGroup`,
+   explain:[
+    "الكيان يمثل شيئاً نريد تخزين معلومات عنه.",
+    "الخاصية تصف الكيان.",
+    "المعرّف يميز كل سجل عن غيره.",
+    "العلاقات تربط الكيانات ببعضها."
+   ],
+   output:"تحديد كيانين كبداية لنموذج قاعدة البيانات.",
+   exercise:"حدد كيانين مناسبين لنظام مكتبة."
+  },
+  {
+   title:"الكيانات والخصائص",
+   theory:`الكيان هو مجموعة عناصر لها نفس النوع من المعلومات. في نظام التسجيل يمكن أن يكون المتربص كياناً، وخصائصه الرقم والاسم وتاريخ الميلاد.
 
-        <tbody id="liste"></tbody>
-    </table>
-</div>
+ينبغي اختيار معرف لا يتكرر، وفصل الخصائص المستقلة عندما يساعد ذلك على تنظيم البيانات.`,
+   code:`TRAINEE(
+  IdTrainee,
+  Name,
+  BirthDate
+)`,
+   explain:[
+    "TRAINEE اسم الكيان.",
+    "IdTrainee هو المعرف.",
+    "Name اسم المتربص.",
+    "BirthDate تاريخ الميلاد."
+   ],
+   output:"كيان المتربص مع ثلاث خصائص.",
+   exercise:"أضف خاصية مناسبة للمتربص وفسر اختيارك."
+  },
+  {
+   title:"العلاقات والكاردينالية",
+   theory:`العلاقة تمثل ارتباطاً بين الكيانات. الكاردينالية توضح الحد الأدنى والأقصى للمشاركة في العلاقة.
 
-</div><script>
-    let stagiaires = [];
+مثلاً، يمكن أن ينتمي كل متربص إلى فوج واحد، بينما يمكن للفوج أن يضم عدة متربصين. يجب التأكد من قواعد المؤسسة قبل تثبيت هذه الفرضية.`,
+   code:`GROUP (0,N) —— ينتمي إلى —— (1,1) TRAINEE`,
+   explain:[
+    "0,N: يمكن للفوج أن يضم صفراً أو عدة متربصين.",
+    "1,1: كل متربص ينتمي إلى فوج واحد في هذا المثال.",
+    "تحدد الكاردينالية من قواعد العمل الفعلية."
+   ],
+   output:"علاقة واحد إلى متعدد وفق الفرضية المذكورة.",
+   exercise:"ما الكاردينالية المناسبة إذا كان المتربص يستطيع التسجيل في عدة دورات؟"
+  }
+ ]
+},
+{
+ id:"excel",name:"Excel",desc:"الجداول والدوال والحسابات",
+ lessons:[
+  {
+   title:"مقدمة في Excel",
+   theory:`Excel برنامج للجداول الإلكترونية. يتكون الملف من أوراق عمل، وكل ورقة تتضمن صفوفاً وأعمدة وخلايا.
 
-    // تحميل المعلومات المحفوظة
-    try {
-        const donnees = localStorage.getItem("stagiaires");
+يمكن استعماله لتسجيل العلامات والمصاريف وإنجاز الحسابات والرسوم البيانية. تبدأ الصيغ الحسابية عادة بعلامة =.`,
+   code:`A1: الاسم
+B1: العلامة
+A2: Hani
+B2: 14
 
-        if (donnees) {
-            const resultat = JSON.parse(donnees);
+في خلية فارغة اكتب:
+=B2+2`,
+   explain:[
+    "A1 تشير إلى العمود A والصف 1.",
+    "B2 تحتوي علامة المتربص.",
+    "=B2+2 تحسب قيمة B2 مضافاً إليها 2."
+   ],
+   output:"إذا كانت B2 تساوي 14، فالنتيجة 16.",
+   exercise:"إذا كانت الخلية A1 تحتوي 20، اكتب صيغة تضيف إليها 5."
+  },
+  {
+   title:"دوال SUM وAVERAGE",
+   theory:`SUM تجمع مجموعة أعداد، وAVERAGE تحسب المتوسط الحسابي. في كثير من إعدادات Excel تُفصل معاملات الدوال بالفاصلة المنقوطة أو الفاصلة بحسب اللغة والإعدادات.`,
+   code:`=SUM(B2:B6)
+=AVERAGE(B2:B6)`,
+   explain:[
+    "B2:B6 تعني نطاق الخلايا من B2 إلى B6.",
+    "SUM تجمع الأعداد في النطاق.",
+    "AVERAGE تحسب متوسط الأعداد في النطاق."
+   ],
+   output:"تعتمد النتائج على القيم الموجودة في الخلايا.",
+   exercise:"اكتب دالة تجمع العلامات من C2 إلى C10."
+  },
+  {
+   title:"النجاح والرسوب IF",
+   theory:`IF تختبر شرطاً، ثم تعيد نتيجة إذا تحقق الشرط ونتيجة أخرى إذا لم يتحقق.
 
-            if (Array.isArray(resultat)) {
-                stagiaires = resultat;
-            }
-        }
-    } catch (erreur) {
-        stagiaires = [];
-    }
+في المثال التالي تعتبر العلامة 10 أو أكثر نجاحاً. انتبه إلى أن الفاصل بين المعاملات يختلف بحسب إعدادات Excel.`,
+   code:`=IF(B2>=10;"ناجح";"راسب")`,
+   explain:[
+    "B2>=10 هو الشرط.",
+    "ناجح هي النتيجة إذا تحقق الشرط.",
+    "راسب هي النتيجة إذا لم يتحقق الشرط.",
+    "قد تحتاج إلى استبدال ; بفاصلة بحسب إعدادات البرنامج."
+   ],
+   output:"إذا كانت B2 تساوي 14 فالنتيجة ناجح.",
+   exercise:"عدّل الصيغة لتعرض «ممتاز» إذا كانت العلامة 16 أو أكثر."
+  }
+ ]
+},
+{
+ id:"it",name:"الإعلام الآلي",desc:"أساسيات الحاسوب وأنظمة التشغيل",
+ lessons:[
+  {
+   title:"مكونات الحاسوب",
+   theory:`يتكون الحاسوب من أجزاء مادية Hardware وبرمجيات Software. من الأجزاء المادية المعالج CPU والذاكرة RAM ووحدة التخزين والشاشة ولوحة المفاتيح.
 
-    // حفظ المعلومات في المتصفح
-    function sauvegarder() {
-        try {
-            localStorage.setItem(
-                "stagiaires",
-                JSON.stringify(stagiaires)
-            );
+المعالج ينفذ التعليمات، وRAM تخزن مؤقتاً البيانات والبرامج المستخدمة، أما SSD أو HDD فيحتفظان بالبيانات حتى بعد إطفاء الجهاز.`,
+   code:`Hardware = الأجزاء المادية
+Software = البرامج
+CPU = المعالج
+RAM = ذاكرة مؤقتة
+SSD = وحدة تخزين`,
+   explain:[
+    "Hardware يمكن لمسه مثل لوحة المفاتيح.",
+    "Software يشمل نظام التشغيل والتطبيقات.",
+    "CPU ينفذ التعليمات.",
+    "RAM تفقد محتواها عادة عند انقطاع الكهرباء.",
+    "SSD يحتفظ بالملفات بعد إيقاف الجهاز."
+   ],
+   output:"تمييز المصطلحات الأساسية للحاسوب.",
+   exercise:"ما الفرق بين RAM وSSD؟"
+  },
+  {
+   title:"نظام التشغيل",
+   theory:`نظام التشغيل هو البرنامج الأساسي الذي يدير موارد الجهاز ويوفر واجهة لتشغيل التطبيقات. من أمثلته Windows وLinux وAndroid.
 
-            return true;
-        } catch (erreur) {
-            return false;
-        }
-    }
+يتعامل نظام التشغيل مع الملفات والذاكرة والأجهزة والمستخدمين، ويساعد التطبيقات على الاستفادة من موارد الحاسوب.`,
+   code:`أمثلة على أنظمة التشغيل:
+Windows
+Linux
+Android`,
+   explain:[
+    "Windows شائع في الحواسيب الشخصية.",
+    "Linux عائلة أنظمة تشغيل.",
+    "Android نظام تشغيل يستعمل في الهواتف."
+   ],
+   output:"ثلاثة أمثلة لأنظمة التشغيل.",
+   exercise:"اذكر نظام التشغيل الذي تستعمله في هاتفك."
+  },
+  {
+   title:"الملفات والمجلدات",
+   theory:`الملف يخزن معلومات مثل مستند أو صورة أو برنامج. أما المجلد فيساعد على تنظيم الملفات والمجلدات الأخرى.
 
-    // عرض المتربصين والبحث عنهم
-    function afficher() {
-        const liste = document.getElementById("liste");
-        const recherche = document
-            .getElementById("recherche")
-            .value.trim()
-            .toLowerCase();
+يجب إعطاء الملفات أسماء واضحة والاحتفاظ بنسخ احتياطية من البيانات المهمة.`,
+   code:`Documents/
+  cours.docx
+  notes.txt
+Images/
+  photo.jpg`,
+   explain:[
+    "Documents مجلد للمستندات.",
+    "cours.docx ملف مستند.",
+    "notes.txt ملف نصي.",
+    "Images مجلد للصور."
+   ],
+   output:"مثال على تنظيم الملفات داخل مجلدات.",
+   exercise:"اقترح بنية مجلدات لتنظيم دروسك."
+  }
+ ]
+}
+];
 
-        liste.replaceChildren();
+const homePage = document.getElementById("homePage");
+const coursePage = document.getElementById("coursePage");
+const lessonPage = document.getElementById("lessonPage");
+const subjects = document.getElementById("subjects");
+const lessonList = document.getElementById("lessonList");
+const lessonContent = document.getElementById("lessonContent");
 
-        let nombre = 0;
+let currentCourse = null;
+let currentIndex = 0;
 
-        stagiaires.forEach(function(s, index) {
-            if (!s.nom.toLowerCase().includes(recherche)) {
-                return;
-            }
+function safeGet(key){
+  try{return localStorage.getItem(key)}catch(e){return null}
+}
+function safeSet(key,value){
+  try{localStorage.setItem(key,value);return true}catch(e){return false}
+}
+function showPage(page){
+  homePage.classList.toggle("hidden",page!=="home");
+  coursePage.classList.toggle("hidden",page!=="course");
+  lessonPage.classList.toggle("hidden",page!=="lesson");
+  window.scrollTo(0,0);
+}
+function renderSubjects(filter=""){
+  subjects.innerHTML="";
+  courses.filter(c=>(c.name+" "+c.desc).toLowerCase().includes(filter.toLowerCase()))
+  .forEach(c=>{
+    const card=document.createElement("article");
+    card.className="card";
+    const saved=safeGet("studentdz-"+c.id);
+    card.innerHTML=`<span class="badge">${c.lessons.length} دروس</span>
+      <h3>${c.name}</h3><p class="muted">${c.desc}</p>
+      <p class="muted">${saved!==null?"لديك تقدم محفوظ":"ابدأ التعلّم"}</p>
+      <button class="primary">دخول المادة</button>`;
+    card.querySelector("button").addEventListener("click",()=>openCourse(c.id));
+    subjects.appendChild(card);
+  });
+}
+function openCourse(id){
+  currentCourse=courses.find(c=>c.id===id);
+  if(!currentCourse)return;
+  document.getElementById("courseTitle").textContent=currentCourse.name;
+  lessonList.innerHTML="";
+  currentCourse.lessons.forEach((l,i)=>{
+    const card=document.createElement("article");
+    card.className="card";
+    card.innerHTML=`<span class="badge">الدرس ${i+1}</span>
+      <h3>${l.title}</h3><button class="primary">فتح الدرس</button>`;
+    card.querySelector("button").addEventListener("click",()=>openLesson(i));
+    lessonList.appendChild(card);
+  });
+  showPage("course");
+}
+function openLesson(index){
+  currentIndex=Math.max(0,Math.min(index,currentCourse.lessons.length-1));
+  const l=currentCourse.lessons[currentIndex];
+  document.getElementById("lessonNumber").textContent=
+    "الدرس "+(currentIndex+1)+" من "+currentCourse.lessons.length;
+  document.getElementById("lessonTitle").textContent=l.title;
 
-            const ligne = document.createElement("tr");
+  const explain=l.explain.map((line,i)=>`<li>${escapeHTML(line)}</li>`).join("");
+  lessonContent.innerHTML=`
+    <section class="lesson-section">
+      <h2>1. الشرح النظري</h2>
+      <p>${escapeHTML(l.theory).replace(/\n/g,"<br>")}</p>
+    </section>
+    <section class="lesson-section">
+      <h2>2. المثال التطبيقي</h2>
+      <pre><code>${escapeHTML(l.code)}</code></pre>
+      <h3>شرح المثال</h3>
+      <ol>${explain}</ol>
+    </section>
+    <section class="lesson-section">
+      <h2>3. النتيجة المتوقعة</h2>
+      <div class="output">${escapeHTML(l.output).replace(/\n/g,"<br>")}</div>
+    </section>
+    <section class="lesson-section">
+      <h2>4. تمرين تطبيقي</h2>
+      <p>${escapeHTML(l.exercise)}</p>
+      <details><summary>نصيحة للحل</summary>
+        <p>راجع المثال السابق، حدّد المتغيرات أو الأوامر المطلوبة، ثم جرّب كتابة الحل بنفسك قبل فتح الحل.</p>
+      </details>
+    </section>
+    <section class="lesson-section">
+      <h2>5. أخطاء شائعة</h2>
+      <ul>
+        <li>الاستعجال في كتابة الكود دون فهم كل سطر.</li>
+        <li>إهمال علامات الترقيم أو أسماء المتغيرات.</li>
+        <li>عدم تجربة المثال وتغيير قيمه للتأكد من فهمه.</li>
+      </ul>
+    </section>`;
 
-            [s.nom, s.age, s.specialite].forEach(function(valeur) {
-                const cellule = document.createElement("td");
-                cellule.textContent = valeur;
-                ligne.appendChild(cellule);
-            });
-
-            const celluleAction = document.createElement("td");
-            const bouton = document.createElement("button");
-
-            bouton.textContent = "حذف";
-            bouton.className = "delete-button";
-
-            bouton.onclick = function() {
-                supprimer(index);
-            };
-
-            celluleAction.appendChild(bouton);
-            ligne.appendChild(celluleAction);
-            liste.appendChild(ligne);
-
-            nombre++;
-        });
-
-        document.getElementById("count").textContent =
-            "عدد النتائج: " + nombre;
-    }
-
-    // إضافة متربص جديد
-    function ajouter() {
-        const nom = document.getElementById("nom").value.trim();
-        const ageTexte = document.getElementById("age").value;
-        const age = Number(ageTexte);
-        const specialite = document.getElementById("specialite").value;
-        const message = document.getElementById("message");
-
-        if (nom === "") {
-            message.style.color = "red";
-            message.textContent = "أدخل الاسم واللقب!";
-            return;
-        }
-
-        if (
-            ageTexte === "" ||
-            !Number.isInteger(age) ||
-            age < 1 ||
-            age > 120
-        ) {
-            message.style.color = "red";
-            message.textContent = "أدخل عمراً صحيحاً!";
-            return;
-        }
-
-        const nouveau = {
-            nom: nom,
-            age: age,
-            specialite: specialite
-        };
-
-        stagiaires.push(nouveau);
-
-        if (!sauvegarder()) {
-            stagiaires.pop();
-            message.style.color = "red";
-            message.textContent = "تعذر الحفظ في المتصفح!";
-            return;
-        }
-
-        document.getElementById("nom").value = "";
-        document.getElementById("age").value = "";
-
-        message.style.color = "green";
-        message.textContent = "تم تسجيل المتربص بنجاح!";
-
-        afficher();
-    }
-
-    // حذف متربص
-    function supprimer(index) {
-        const موافق = confirm("هل تريد حذف هذا المتربص؟");
-
-        if (!موافق) {
-            return;
-        }
-
-        const المحذوف = stagiaires.splice(index, 1)[0];
-
-        if (!sauvegarder()) {
-            stagiaires.splice(index, 0, المحذوف);
-
-            alert("تعذر حفظ عملية الحذف!");
-            afficher();
-            return;
-        }
-
-        document.getElementById("message").textContent =
-            "تم حذف المتربص.";
-
-        afficher();
-    }
-
-    // عرض المعلومات عند فتح الصفحة
-    afficher();
-</script></body>
+  document.getElementById("prevLesson").disabled=currentIndex===0;
+  document.getElementById("nextLesson").disabled=currentIndex===currentCourse.lessons.length-1;
+  document.getElementById("saveMessage").textContent="";
+  showPage("lesson");
+}
+function escapeHTML(text){
+  return String(text).replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+document.getElementById("backSubjects").addEventListener("click",()=>showPage("home"));
+document.getElementById("backLessons").addEventListener("click",()=>showPage("course"));
+document.getElementById("homeButton").addEventListener("click",()=>showPage("home"));
+document.getElementById("search").addEventListener("input",e=>renderSubjects(e.target.value));
+document.getElementById("prevLesson").addEventListener("click",()=>{
+  if(currentIndex>0)openLesson(currentIndex-1);
+});
+document.getElementById("nextLesson").addEventListener("click",()=>{
+  if(currentIndex<currentCourse.lessons.length-1)openLesson(currentIndex+1);
+});
+document.getElementById("saveLesson").addEventListener("click",()=>{
+  if(!currentCourse)return;
+  const ok=safeSet("studentdz-"+currentCourse.id,String(currentIndex));
+  document.getElementById("saveMessage").textContent=ok?
+    "تم حفظ تقدمك على هذا الجهاز. تقدر تكمل من نفس الدرس لاحقاً.":
+    "تعذر الحفظ في هذا المتصفح. جرّب فتح الموقع في متصفح عادي.";
+});
+document.getElementById("themeButton").addEventListener("click",()=>{
+  document.body.classList.toggle("dark");
+  safeSet("studentdz-theme",document.body.classList.contains("dark")?"dark":"light");
+});
+if(safeGet("studentdz-theme")==="dark")document.body.classList.add("dark");
+renderSubjects();
+</script>
+</body>
 </html>
