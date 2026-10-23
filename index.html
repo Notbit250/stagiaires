@@ -2,490 +2,413 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101827">
-<title>الطالب DZ | منصة التعلّم</title>
+<meta name="description" content="الطالب DZ: دروس الإعلام الآلي والبرمجة وقواعد البيانات للطلبة الجزائريين">
+<title>الطالب DZ | Étudiant DZ</title>
 
 <style>
-:root{
-  --bg:#101827;
-  --panel:#182335;
-  --card:#202d40;
-  --border:#334258;
-  --text:#f4f7fc;
-  --muted:#aab6c8;
-  --blue:#7097ff;
-  --blue2:#4169e1;
-  --green:#54d6a0;
+:root {
+  --bg:#0b1120;
+  --panel:#121c2e;
+  --card:#172338;
+  --text:#edf3ff;
+  --muted:#a6b4ca;
+  --accent:#38bdf8;
+  --border:#293950;
+  --green:#34d399;
+}
+body.light {
+  --bg:#f1f5f9;
+  --panel:#ffffff;
+  --card:#f8fafc;
+  --text:#172033;
+  --muted:#56657a;
+  --accent:#0284c7;
+  --border:#d7e0ec;
+  --green:#059669;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--bg);color:var(--text);
-  font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-  line-height:1.8;min-height:100vh
+  font-family:Arial,Tahoma,sans-serif;line-height:1.8;
+  transition:background .2s,color .2s
 }
 button,input{font:inherit}
 button{cursor:pointer}
-button:focus-visible,input:focus-visible{
-  outline:2px solid var(--blue);outline-offset:3px
-}
-button:disabled{opacity:.35;cursor:not-allowed}
-a{color:inherit;text-decoration:none}
-.container{width:min(1080px,92%);margin:auto}
 header{
-  background:rgba(16,24,39,.96);
+  padding:18px 5%;background:var(--panel);
   border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)
-}
-.nav{
   display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:13px 0
+  gap:12px;flex-wrap:wrap
 }
-.logo{font-size:23px;font-weight:850;letter-spacing:-.5px}
-.logo span{color:var(--blue)}
-.nav-actions{display:flex;gap:8px}
+.logo{font-size:22px;font-weight:bold;color:var(--accent)}
+.logo small{display:block;font-size:12px;color:var(--muted);font-weight:normal}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap}
 .btn{
-  border:1px solid var(--border);background:var(--panel);
-  color:var(--text);padding:9px 14px;border-radius:11px
+  border:1px solid var(--border);background:var(--card);
+  color:var(--text);padding:9px 13px;border-radius:10px
 }
-.btn-primary{
-  background:var(--blue2);border-color:var(--blue2);color:white
-}
+.btn.primary{background:var(--accent);color:#07111e;border:0;font-weight:bold}
+main{max-width:1100px;margin:auto;padding:20px}
 .hero{
-  position:relative;overflow:hidden;margin:24px 0 28px;
-  border:1px solid var(--border);border-radius:23px;
-  background:linear-gradient(105deg,#192944,#172131 65%,#263653);
-  min-height:235px;display:grid;grid-template-columns:1.1fr .9fr
+  padding:28px 22px;border:1px solid var(--border);border-radius:20px;
+  background:linear-gradient(135deg,var(--panel),var(--card));
+  margin-bottom:22px
 }
-.hero-copy{padding:28px;align-self:center;position:relative;z-index:2}
-.eyebrow{color:#9db6ff;font-size:13px;font-weight:700}
-.hero h1{font-size:clamp(27px,5vw,43px);line-height:1.35;margin:9px 0}
-.hero p{color:#c1cde0;margin:8px 0 18px}
-.hero-image{
-  min-height:235px;
-  background:
-  linear-gradient(90deg,#192944 0%,rgba(25,41,68,.1) 100%),
-  url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80')
-  center/cover;
-}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.stat{border:1px solid #3a4a62;background:#1b2b42;padding:8px 12px;border-radius:12px;font-size:13px}
-.section-head{
-  display:flex;justify-content:space-between;align-items:end;
-  gap:12px;margin:27px 0 14px
-}
-.section-head h2{font-size:22px;margin:0}
-.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}
-.divider{height:1px;background:var(--border);margin:23px 0}
+.hero h1{font-size:clamp(25px,5vw,38px);margin:0 0 8px}
+.hero p{color:var(--muted);margin:0 0 16px}
 .search{
-  width:100%;padding:14px 16px;background:var(--panel);
-  color:var(--text);border:1px solid var(--border);border-radius:13px
+  width:100%;padding:13px;border-radius:12px;
+  border:1px solid var(--border);background:var(--bg);color:var(--text)
 }
-.search::placeholder{color:#8998ae}
-.course-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px
-}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stat{background:var(--card);padding:10px 14px;border-radius:10px;font-size:14px}
+.section-title{margin:25px 0 12px;font-size:22px}
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .course{
-  overflow:hidden;background:var(--panel);border:1px solid var(--border);
-  border-radius:18px;transition:transform .2s,border-color .2s
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;
+  padding:18px;display:flex;flex-direction:column;gap:8px
 }
-.course:hover{transform:translateY(-3px);border-color:#6885c8}
-.course-art{
-  height:140px;position:relative;overflow:hidden;
-  background:#263751;display:flex;align-items:center;justify-content:center
+.course .icon{font-size:34px}
+.course h3{margin:0;font-size:19px}
+.course p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.course button{margin-top:8px}
+.hidden{display:none!important}
+#lessonView{margin-top:20px}
+.lesson-head{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;margin-bottom:14px
 }
-.course-art img{width:100%;height:100%;object-fit:cover;display:block;opacity:.68}
-.course-art::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg,#182335 0%,transparent 90%)
+.lesson-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px}
+.sidebar,.lesson-content{
+  border:1px solid var(--border);border-radius:15px;
+  background:var(--panel);padding:15px;min-width:0
 }
-.course-icon{
-  position:absolute;z-index:1;top:14px;right:15px;
-  font-size:28px;background:#17243bdc;border:1px solid #526582;
-  border-radius:13px;padding:4px 11px
+.sidebar h3{margin-top:0}
+.lesson-link{
+  display:block;width:100%;text-align:right;margin:6px 0;
+  padding:10px;border:1px solid transparent;border-radius:9px;
+  background:var(--card);color:var(--text)
 }
-.course-body{padding:17px}
-.course-meta{font-size:12px;color:#a9bdff}
-.course h3{font-size:21px;margin:4px 0}
-.course p{font-size:14px;color:var(--muted);margin:5px 0 15px}
-.course-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.badge{font-size:12px;color:#c2d2ff;background:#253a5d;padding:5px 9px;border-radius:8px}
-.course-open{background:var(--blue2);border:0;border-radius:10px;color:white;padding:9px 13px}
-.empty{padding:30px;text-align:center;color:var(--muted);display:none}
-.view{display:none;animation:appear .22s ease}
-.view.active{display:block}
-@keyframes appear{from{opacity:.35;transform:translateX(7px)}to{opacity:1;transform:translateX(0)}}
-.back-row{display:flex;align-items:center;gap:10px;margin:24px 0 17px}
-.back-btn{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 13px}
-.breadcrumb{font-size:13px;color:var(--muted)}
-.subject-hero{
-  border:1px solid var(--border);border-radius:19px;overflow:hidden;
-  background:var(--panel);display:grid;grid-template-columns:1fr 150px;
-  align-items:center;padding:21px;gap:12px
+.lesson-link.active{border-color:var(--accent);color:var(--accent)}
+.lesson-content h1{font-size:27px;line-height:1.4;margin-top:0}
+.lesson-content h2{font-size:20px;border-bottom:1px solid var(--border);padding-bottom:7px;margin-top:26px}
+.lesson-content p{color:var(--text)}
+.note{
+  padding:12px;border-right:4px solid var(--accent);
+  background:var(--card);border-radius:8px;margin:14px 0
 }
-.subject-hero h1{margin:4px 0;font-size:29px}
-.subject-hero p{color:var(--muted);margin:3px 0}
-.subject-icon{font-size:62px;text-align:center}
-.lesson-list{display:grid;gap:10px}
-.lesson-item{
-  display:flex;align-items:center;gap:13px;text-align:right;width:100%;
-  background:var(--panel);border:1px solid var(--border);border-radius:13px;
-  color:var(--text);padding:14px
-}
-.lesson-number{
-  width:39px;height:39px;flex-shrink:0;display:grid;place-items:center;
-  background:#293d5c;color:#c7d6ff;border-radius:11px;font-weight:750
-}
-.lesson-info{flex:1;min-width:0}
-.lesson-info strong{display:block}
-.lesson-info small{color:var(--muted)}
-.arrow{color:var(--blue);font-size:20px}
-.lesson-shell{
-  border:1px solid var(--border);border-radius:19px;overflow:hidden;
-  background:var(--panel)
-}
-.lesson-top{
-  padding:18px 20px;border-bottom:1px solid var(--border);
-  background:#1b2940
-}
-.lesson-top small{color:#b0c2ff}
-.lesson-top h1{font-size:clamp(23px,4vw,32px);margin:5px 0}
-.lesson-progress{height:4px;background:#35435a}
-.lesson-progress span{display:block;height:100%;background:var(--blue);width:0}
-.lesson-content{padding:22px;min-height:240px}
-.lesson-content h2{font-size:20px;margin:20px 0 8px}
-.lesson-content p{color:#d1d9e6}
-.lesson-content li{margin:7px 0;color:#d1d9e6}
-.codebox{
-  direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;
-  background:#0c1320;border:1px solid #334258;color:#d8e4ff;
-  padding:17px;border-radius:12px;font:14px/1.9 ui-monospace,monospace
+pre{
+  background:#07101d;color:#d9f4ff;padding:15px;border-radius:12px;
+  overflow-x:auto;direction:ltr;text-align:left;white-space:pre;
+  font:14px/1.7 Consolas,monospace
 }
 .output{
-  background:#142d29;border:1px solid #285449;color:#a9f0d4;
-  border-radius:10px;padding:11px 14px;direction:ltr;text-align:left
+  background:#09251e;color:#a7f3d0;padding:12px;border-radius:10px;
+  direction:ltr;text-align:left;white-space:pre-wrap
 }
-.tip{
-  border-right:3px solid var(--blue);background:#202f46;
-  padding:12px 14px;border-radius:9px;margin:17px 0
-}
-.lesson-controls{
-  border-top:1px solid var(--border);padding:15px;
-  display:flex;align-items:center;justify-content:space-between;gap:9px
-}
-.lesson-controls .btn{flex:1}
-.lesson-count{font-size:12px;color:var(--muted);text-align:center}
-.quiz{
-  border:1px solid var(--border);border-radius:13px;padding:16px;margin-top:20px
-}
-.quiz button{
-  display:block;width:100%;text-align:right;margin:8px 0;
-  border:1px solid var(--border);border-radius:9px;
-  padding:10px;background:#192538;color:var(--text)
-}
-.quiz-result{font-size:14px;margin-top:8px}
-footer{border-top:1px solid var(--border);margin-top:38px;padding:24px 0;color:var(--muted);font-size:13px}
-.footer-inner{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-@media(max-width:650px){
-  .hero{grid-template-columns:1fr}
-  .hero-copy{padding:23px 20px 8px}
-  .hero-image{min-height:120px;background-position:center 43%}
-  .course-grid{grid-template-columns:1fr}
-  .course-art{height:150px}
-  .subject-hero{grid-template-columns:1fr 70px;padding:15px}
-  .subject-icon{font-size:45px}
-  .lesson-content{padding:17px}
-  .nav{padding:10px 0}
-  .logo{font-size:20px}
-  .nav-actions .btn{padding:7px 10px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+.exercise,.quiz{background:var(--card);border:1px solid var(--border);padding:15px;border-radius:12px;margin-top:15px}
+.quiz button{display:block;width:100%;text-align:right;margin:8px 0;padding:10px;border-radius:9px;border:1px solid var(--border);background:var(--panel);color:var(--text)}
+.feedback{margin-top:10px;font-weight:bold}
+.lesson-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.lesson-nav button{flex:1}
+.progress-wrap{height:8px;background:var(--border);border-radius:10px;overflow:hidden;margin:10px 0 18px}
+.progress-bar{height:100%;width:0;background:var(--green);transition:width .2s}
+footer{text-align:center;padding:30px 15px;color:var(--muted);border-top:1px solid var(--border);margin-top:35px}
+@media(max-width:720px){
+ .lesson-layout{grid-template-columns:1fr}
+ .sidebar{order:2}
+ .lesson-content{order:1}
+ main{padding:13px}
+ .hero{padding:21px 16px}
 }
 </style>
 </head>
 
 <body>
 <header>
-  <div class="container nav">
-    <a href="#" class="logo" id="logoHome">الطالب <span>DZ</span></a>
-    <div class="nav-actions">
-      <button class="btn" id="homeButton">⌂ الرئيسية</button>
-      <button class="btn" id="themeButton" aria-label="تغيير المظهر">☾</button>
-    </div>
+  <div class="logo">🎓 الطالب DZ <small>Étudiant DZ | تعلّم خطوة بخطوة</small></div>
+  <div class="header-actions">
+    <button class="btn" id="themeBtn">🌙 / ☀️</button>
+    <button class="btn" id="homeBtn">الرئيسية</button>
   </div>
 </header>
 
-<main class="container">
-  <section class="view active" id="homeView">
+<main>
+  <section id="homeView">
     <div class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">منصة تعليمية جزائرية</div>
-        <h1>تعلّم اليوم،<br>وابنِ مستقبلك غداً.</h1>
-        <p>تعلّم الإعلام الآلي خطوة بخطوة، من الأساسيات حتى التطبيقات العملية.</p>
-        <a href="#coursesTitle" class="btn btn-primary">اكتشف المواد ←</a>
-        <div class="stats">
-          <span class="stat">📚 مواد متنوعة</span>
-          <span class="stat">💻 أمثلة تطبيقية</span>
-          <span class="stat">🎯 تعلّم تدريجي</span>
-        </div>
+      <h1>مستقبلك يبدأ من هنا 🚀</h1>
+      <p>تعلّم البرمجة وقواعد البيانات والإعلام الآلي بالعربية، مع أمثلة وتمارين واختبارات.</p>
+      <input id="search" class="search" placeholder="🔎 ابحث عن درس أو تخصص..." aria-label="ابحث عن درس أو تخصص">
+      <div class="stats">
+        <div class="stat">📚 <span id="courseCount">7</span> تخصصات</div>
+        <div class="stat">📖 <span id="lessonCount">0</span> درس</div>
+        <div class="stat">✅ تقدّمك: <span id="progressText">0%</span></div>
       </div>
-      <div class="hero-image" role="img" aria-label="طالب يتعلم باستعمال الحاسوب"></div>
+      <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
     </div>
-
-    <div class="section-head" id="coursesTitle">
-      <div>
-        <h2>اكتشف موادك</h2>
-        <p>اختار المادة وابدأ التعلّم بالترتيب.</p>
-      </div>
-    </div>
-    <input class="search" id="searchInput" placeholder="🔎 ابحث عن Java أو SQL أو HTML..." aria-label="ابحث عن مادة">
-    <div class="divider"></div>
-    <div class="course-grid" id="courseGrid"></div>
-    <div class="empty" id="emptySearch">ما لقيناش مادة بهذا الاسم.</div>
+    <h2 class="section-title">📚 اختَر تخصصك</h2>
+    <div id="courseGrid" class="courses"></div>
   </section>
 
-  <section class="view" id="subjectView">
-    <div class="back-row">
-      <button class="back-btn" id="backHome">→ الرئيسية</button>
-      <span class="breadcrumb">/ فهرس المادة</span>
+  <section id="lessonView" class="hidden">
+    <div class="lesson-head">
+      <button class="btn" id="backBtn">→ الرجوع إلى التخصصات</button>
+      <span id="courseLabel"></span>
     </div>
-    <div class="subject-hero">
-      <div>
-        <div class="eyebrow">مسار التعلّم</div>
-        <h1 id="subjectTitle">Java</h1>
-        <p id="subjectDescription"></p>
-        <div class="stats"><span class="stat" id="subjectCount"></span><span class="stat">تعلم حسب ترتيب الدروس</span></div>
-      </div>
-      <div class="subject-icon" id="subjectIcon">☕</div>
+    <div class="lesson-layout">
+      <aside class="sidebar">
+        <h3>📑 فهرس الدروس</h3>
+        <div id="lessonList"></div>
+      </aside>
+      <article class="lesson-content" id="lessonContent"></article>
     </div>
-    <div class="section-head"><div><h2>فهرس الدروس</h2><p>اضغط على أي درس لفتحه.</p></div></div>
-    <div class="divider"></div>
-    <div class="lesson-list" id="lessonList"></div>
-  </section>
-
-  <section class="view" id="lessonView">
-    <div class="back-row">
-      <button class="back-btn" id="backLessons">→ فهرس الدروس</button>
-      <span class="breadcrumb" id="lessonBreadcrumb">المادة / الدرس</span>
-    </div>
-    <article class="lesson-shell" id="lessonSwipeArea">
-      <div class="lesson-top">
-        <small id="lessonSubjectLabel">الطالب DZ · درس تعليمي</small>
-        <h1 id="lessonTitle">عنوان الدرس</h1>
-        <div class="lesson-count" id="lessonNumber"></div>
-      </div>
-      <div class="lesson-progress"><span id="lessonProgress"></span></div>
-      <div class="lesson-content" id="lessonContent"></div>
-      <div class="lesson-controls">
-        <button class="btn" id="prevLesson">→ السابق</button>
-        <span class="lesson-count" id="lessonPosition">1 / 3</span>
-        <button class="btn btn-primary" id="nextLesson">التالي ←</button>
-      </div>
-    </article>
-    <p class="breadcrumb" style="text-align:center;margin-top:12px">📱 اسحب يميناً أو يساراً للتنقل بين الدروس.</p>
   </section>
 </main>
 
 <footer>
-  <div class="container footer-inner">
-    <span><strong>الطالب DZ</strong> — طريقك لتعلّم الإعلام الآلي.</span>
-    <span>صُنع بحب للمتعلمين الجزائريين 🇩🇿</span>
-  </div>
+  <div>🎓 الطالب DZ | Étudiant DZ</div>
+  <div>التعلّم اليوم هو نجاح الغد 💙</div>
+  <p>هاني دوفة</p>
 </footer>
 
 <script>
 const courses = [
- {id:"java",name:"Java",icon:"☕",category:"البرمجة",desc:"تعلّم البرمجة من المتغيرات حتى مبادئ البرمجة الكائنية.",image:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=75",
+{
+ id:"java",name:"Java",icon:"☕",desc:"تعلّم البرمجة من المتغيرات إلى الكائنات.",
  lessons:[
-  {title:"مقدمة في Java",intro:"Java لغة برمجة تُستعمل لبناء تطبيقات متنوعة. نبدأ بفهم شكل البرنامج.",code:'public class Main {\\n  public static void main(String[] args) {\\n    System.out.println(\"Salam!\");\\n  }\\n}',output:"Salam!",explain:"public class Main يعرّف الصنف الرئيسي. main هي نقطة انطلاق البرنامج، وSystem.out.println تطبع النص على الشاشة.",tip:"احرص على كتابة أسماء Java بالحروف الصحيحة، فالحروف الكبيرة والصغيرة مهمة."},
-  {title:"المتغيرات وأنواع البيانات",intro:"المتغير مكان نحتفظ فيه بقيمة نستعملها أثناء تنفيذ البرنامج. لكل نوع بيانات استعمال مناسب.",code:'int age = 20;\\ndouble price = 125.5;\\nString name = \"Ali\";\\nSystem.out.println(name);',output:"Ali",explain:"int للأعداد الصحيحة، وdouble للأعداد العشرية، وString للنصوص. علامة = تعطي القيمة للمتغير.",tip:"في Java تنتهي معظم التعليمات بعلامة الفاصلة المنقوطة ;"},
-  {title:"الشروط واتخاذ القرار",intro:"نستعمل if عندما نريد تنفيذ تعليمات بشرط أن يكون صحيحاً.",code:'int mark = 15;\\nif (mark >= 10) {\\n  System.out.println(\"ناجح\");\\n} else {\\n  System.out.println(\"راسب\");\\n}',output:"ناجح",explain:"البرنامج يفحص هل العلامة أكبر من أو تساوي 10. إذا تحقق الشرط يطبع ناجح، وإلا يطبع راسب.",tip:"عامل المقارنة == يختبر المساواة، أما = فيُستخدم لإسناد القيمة."},
-  {title:"الحلقات التكرارية",intro:"الحلقات تتيح تكرار التعليمات دون كتابتها مرات كثيرة.",code:'for (int i = 1; i <= 3; i++) {\\n  System.out.println(i);\\n}',output:"1\\n2\\n3",explain:"تبدأ i من 1، وتستمر الحلقة ما دامت i أصغر من أو تساوي 3. بعد كل دورة تزداد i بواحد.",tip:"تأكد من أن شرط الحلقة سيتوقف، لتجنب التكرار غير المنتهي."},
-  {title:"الدوال Methods",intro:"الدالة تجمع تعليمات في مكان واحد حتى نتمكن من إعادة استعمالها.",code:'static int sum(int a, int b) {\\n  return a + b;\\n}',output:"الدالة ترجع مجموع العددين.",explain:"تستقبل الدالة عددين a وb، ثم تُرجع مجموعهما بواسطة return. يجب استدعاؤها حتى تنفّذ.",tip:"اختر اسماً يوضح وظيفة الدالة."},
-  {title:"مقدمة في البرمجة الكائنية",intro:"تسمح البرمجة الكائنية بتنظيم البرنامج باستخدام الأصناف والكائنات.",code:'class Student {\\n  String name;\\n}\\nStudent s = new Student();\\ns.name = \"Ali\";',output:"تم إنشاء كائن طالب اسمه Ali.",explain:"class يعرّف صنفاً، وnew تنشئ كائناً منه. المتغير name يمثل معلومة محفوظة داخل الكائن.",tip:"هذه مقدمة فقط؛ الوراثة والتغليف وتعدد الأشكال تحتاج دروساً مستقلة."}
+ {title:"مقدمة في Java",body:"Java لغة برمجة تُستخدم في تطبيقات سطح المكتب والويب وأندرويد. نكتب البرنامج ثم نترجمه ونشغّله باستخدام بيئة Java.",code:'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Salam");\n    }\n}',output:"Salam",tip:"اسم الملف Main.java يجب أن يطابق اسم الصنف العام Main.",q:"ما وظيفة System.out.println؟",opts:["عرض نص على الشاشة","حذف ملف","إنشاء قاعدة بيانات"],ans:0,exercise:"غيّر النص Salam إلى Bonjour ثم شغّل البرنامج."},
+ {title:"المتغيرات وأنواع البيانات",body:"المتغير مكان في الذاكرة نخزّن فيه قيمة. int للأعداد الصحيحة، double للأعداد العشرية، char لحرف، String للنصوص، وboolean للقيم true أو false.",code:'int age = 21;\ndouble price = 12.5;\nString name = "Hani";\nboolean student = true;\nSystem.out.println(name);\nSystem.out.println(age);',output:"Hani\n21",tip:"النصوص بين علامتي اقتباس مزدوجتين، ومعظم تعليمات Java تنتهي بفاصلة منقوطة.",q:"أي نوع يناسب العدد 12.5؟",opts:["int","double","boolean"],ans:1,exercise:"أنشئ متغيرًا باسم city من النوع String وخزّن فيه اسم مدينتك."},
+ {title:"العمليات الحسابية",body:"تدعم Java العمليات + للجمع، - للطرح، * للضرب، / للقسمة، و% لباقي القسمة.",code:'int a = 10;\nint b = 3;\nSystem.out.println(a + b);\nSystem.out.println(a % b);',output:"13\n1",tip:"قسمة عددين صحيحين قد تعطي نتيجة صحيحة فقط؛ استعمل double عند الحاجة إلى الكسور.",q:"ما نتيجة 10 % 3؟",opts:["3","1","0"],ans:1,exercise:"أنشئ متغيرين واجمعهما ثم اطبع النتيجة."},
+ {title:"الشروط if و else",body:"نستخدم if لاتخاذ قرار حسب شرط. إذا تحقق الشرط ينفذ البرنامج الكتلة الأولى، وإلا ينفذ else.",code:'int mark = 15;\nif (mark >= 10) {\n    System.out.println("Admis");\n} else {\n    System.out.println("Ajourné");\n}',output:"Admis",tip:"استعمل == للمقارنة بين قيمتين، وليس = التي تُستخدم للإسناد.",q:"متى ينفّذ البرنامج else؟",opts:["عندما يكون الشرط غير محقق","دائمًا","قبل if"],ans:0,exercise:"اكتب شرطًا يطبع Réussi إذا كانت العلامة 10 أو أكثر."},
+ {title:"الحلقات for و while",body:"الحلقات تكرّر تنفيذ التعليمات. for مناسبة عندما تعرف عدد التكرارات غالبًا، وwhile تستمر ما دام الشرط صحيحًا.",code:'for (int i = 1; i <= 3; i++) {\n    System.out.println(i);\n}',output:"1\n2\n3",tip:"تأكد من تحديث متغير الحلقة حتى لا تدخل في حلقة لا نهائية.",q:"كم مرة تتكرر الحلقة في المثال؟",opts:["مرتين","3 مرات","4 مرات"],ans:1,exercise:"عدّل الحلقة لتطبع الأعداد من 1 إلى 5."},
+ {title:"الدوال Methods",body:"الدالة تجمع تعليمات في جزء يمكن استدعاؤه عند الحاجة. نوع الإرجاع void يعني أنها لا تعيد قيمة.",code:'public static int add(int a, int b) {\n    return a + b;\n}\npublic static void main(String[] args) {\n    System.out.println(add(2, 3));\n}',output:"5",tip:"نوع القيمة بعد return يجب أن يتوافق مع نوع الدالة.",q:"ما فائدة الدوال؟",opts:["إعادة استعمال التعليمات","إيقاف الحاسوب","حذف المتغيرات"],ans:0,exercise:"أنشئ دالة تستقبل عددين وتعيد حاصل ضربهما."},
+ {title:"مقدمة في البرمجة الكائنية",body:"البرمجة الكائنية OOP تنظّم البرنامج في أصناف Classes وكائنات Objects. الصنف يصف الخصائص والسلوك، والكائن نسخة منه.",code:'class Student {\n    String name;\n    Student(String n) {\n        name = n;\n    }\n}\nStudent s = new Student("Hani");\nSystem.out.println(s.name);',output:"Hani",tip:"هذا المثال يشرح الفكرة؛ ضع الصنف والدالة الرئيسية في ملف Java صحيح عند التجربة.",q:"ما هو Object؟",opts:["نسخة من صنف","نوع قاعدة بيانات","حلقة تكرار"],ans:0,exercise:"أنشئ صنفًا Car فيه خاصية brand ثم أنشئ منه كائنًا."}
  ]},
- {id:"sql",name:"SQL وقواعد البيانات",icon:"🗄️",category:"قواعد البيانات",desc:"تعلّم إنشاء الجداول وإضافة البيانات واسترجاعها.",image:"https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=900&q=75",
+{
+ id:"sql",name:"SQL وقواعد البيانات",icon:"🗄️",desc:"إنشاء الجداول وإضافة البيانات والاستعلام عنها.",
  lessons:[
-  {title:"ما هي قاعدة البيانات؟",intro:"قاعدة البيانات تنظّم المعلومات وتسمح بتخزينها واسترجاعها بطريقة مرتبة.",code:"CREATE TABLE Students (\\n  id INT,\\n  name VARCHAR(50)\\n);",output:"إنشاء جدول Students بحقلين.",explain:"CREATE TABLE تنشئ جدولاً. id حقل رقمي، وname حقل نصي يصل طوله إلى 50 حرفاً.",tip:"في المشاريع الحقيقية نحدد عادة مفتاحاً أساسياً Primary Key."},
-  {title:"إضافة البيانات INSERT",intro:"يُستخدم INSERT لإضافة سجل جديد إلى جدول.",code:"INSERT INTO Students (id, name)\\nVALUES (1, 'Ali');",output:"إضافة الطالب Ali إلى الجدول.",explain:"حددنا اسم الجدول والحقول، ثم قدمنا قيمة لكل حقل بالترتيب نفسه.",tip:"النصوص في SQL تُكتب عادة بين علامتي اقتباس مفردتين."},
-  {title:"استرجاع البيانات SELECT",intro:"يتيح SELECT قراءة البيانات من جدول.",code:"SELECT name\\nFROM Students;",output:"عرض عمود name لكل الطلاب.",explain:"SELECT يحدد الأعمدة المطلوبة، وFROM يحدد الجدول الذي نقرأ منه.",tip:"استعمال * يعرض كل الأعمدة، لكن تحديد المطلوب أوضح غالباً."},
-  {title:"تصفية النتائج WHERE",intro:"WHERE تُستخدم لعرض السجلات التي تحقق شرطاً.",code:"SELECT *\\nFROM Students\\nWHERE id = 1;",output:"عرض السجل الذي رقمه 1.",explain:"يُطبَّق الشرط على السجلات، وتظهر فقط الصفوف التي يساوي فيها id القيمة 1.",tip:"في قواعد البيانات الكبيرة، تعلّم الفهارس لتحسين سرعة البحث."},
-  {title:"تعديل وحذف البيانات",intro:"UPDATE تعدّل السجلات، وDELETE تحذفها. استعمل الشرط المناسب بحذر.",code:"UPDATE Students\\nSET name = 'Sara'\\nWHERE id = 1;",output:"تغيير اسم الطالب ذي الرقم 1 إلى Sara.",explain:"SET تحدد القيمة الجديدة. WHERE تحدد السجل المراد تعديله.",tip:"غياب WHERE قد يؤدي إلى تعديل جميع السجلات؛ اختبر الشرط قبل التنفيذ."}
+ {title:"ما هي قاعدة البيانات؟",body:"قاعدة البيانات مجموعة منظّمة من البيانات. في قاعدة البيانات العلائقية تُخزّن البيانات عادة في جداول، وكل جدول يحتوي أعمدة وصفوفًا.",code:"CREATE DATABASE formation;\nUSE formation;",output:"إنشاء قاعدة بيانات باسم formation واختيارها.",tip:"الأوامر قد تختلف قليلًا حسب نظام إدارة قاعدة البيانات المستخدم.",q:"ممّ يتكون الجدول؟",opts:["صفوف وأعمدة","صور فقط","مجلدات فقط"],ans:0,exercise:"اقترح اسم قاعدة بيانات لتسيير المتربصين."},
+ {title:"إنشاء جدول CREATE TABLE",body:"الأمر CREATE TABLE ينشئ جدولًا. نحدّد اسم كل عمود ونوع البيانات التي يمكن أن يخزنها.",code:"CREATE TABLE stagiaire (\n id INT PRIMARY KEY,\n nom VARCHAR(50),\n age INT\n);",output:"إنشاء جدول stagiaire بثلاثة أعمدة.",tip:"PRIMARY KEY يميّز كل سجل ويمنع تكرار قيمة المفتاح.",q:"ما وظيفة VARCHAR؟",opts:["تخزين نص بطول متغير","إجراء عملية جمع","حذف الجدول"],ans:0,exercise:"أنشئ جدول formation فيه id وnom."},
+ {title:"إضافة البيانات INSERT",body:"نستعمل INSERT INTO لإضافة سجل جديد. من الأفضل تحديد أسماء الأعمدة لتوضيح ترتيب القيم.",code:"INSERT INTO stagiaire (id, nom, age)\nVALUES (1, 'Hani', 21);",output:"إضافة متربص اسمه Hani.",tip:"النصوص توضع بين اقتباسين مفردين في SQL غالبًا.",q:"ما الأمر المستخدم لإضافة سجل؟",opts:["INSERT INTO","SELECT","DROP"],ans:0,exercise:"أضف سجلًا آخر باسم Ahmed وعمر 20 مع id مختلف."},
+ {title:"عرض البيانات SELECT",body:"SELECT تسترجع البيانات من جدول. النجمة * تعني اختيار جميع الأعمدة.",code:"SELECT * FROM stagiaire;\nSELECT nom FROM stagiaire;",output:"الأول يعرض كل الأعمدة، والثاني يعرض عمود nom فقط.",tip:"يمكن تحديد الأعمدة المطلوبة بدل استعمال * عندما لا تحتاج جميع البيانات.",q:"ما وظيفة SELECT؟",opts:["عرض البيانات","إنشاء مستخدم فقط","حذف قاعدة البيانات"],ans:0,exercise:"اكتب استعلامًا يعرض أسماء المتربصين فقط."},
+ {title:"تصفية البيانات WHERE",body:"WHERE تحدّد الشرط الذي يجب أن يحققه السجل ليظهر في النتيجة.",code:"SELECT * FROM stagiaire\nWHERE age >= 18;",output:"يعرض المتربصين الذين أعمارهم 18 أو أكثر.",tip:"يمكن استعمال AND وOR لربط شروط متعددة.",q:"ما وظيفة WHERE؟",opts:["تصفية السجلات","تغيير لون الجدول","إضافة عمود دائمًا"],ans:0,exercise:"اعرض المتربص الذي يحمل id يساوي 1."},
+ {title:"تعديل البيانات UPDATE",body:"UPDATE يغيّر بيانات موجودة. يجب الانتباه إلى WHERE حتى لا تعدّل جميع السجلات دون قصد.",code:"UPDATE stagiaire\nSET age = 22\nWHERE id = 1;",output:"تغيير عمر السجل الذي id الخاص به 1 إلى 22.",tip:"قبل التعديل، نفّذ SELECT بنفس شرط WHERE للتحقق من السجلات المقصودة.",q:"ما خطر نسيان WHERE؟",opts:["تعديل جميع السجلات","إضافة سجل واحد فقط","لا يحدث شيء"],ans:0,exercise:"غيّر اسم المتربص صاحب id يساوي 1."},
+ {title:"حذف البيانات DELETE",body:"DELETE FROM يحذف سجلات من الجدول. يحدّد WHERE السجلات المطلوب حذفها.",code:"DELETE FROM stagiaire\nWHERE id = 1;",output:"حذف السجل الذي id يساوي 1.",tip:"لا تنفذ DELETE دون WHERE إلا إذا كنت تقصد حذف جميع سجلات الجدول.",q:"أي أمر يحذف سجلًا؟",opts:["DELETE","SELECT","INSERT"],ans:0,exercise:"اكتب أمرًا لحذف السجل الذي id يساوي 2."},
+ {title:"ربط الجداول JOIN",body:"JOIN يجمع بيانات مرتبطة بين جدولين. عادة نربط المفتاح الأجنبي بالمفتاح الأساسي.",code:"SELECT s.nom, f.nom AS formation\nFROM stagiaire s\nJOIN inscription i ON s.id = i.stagiaire_id\nJOIN formation f ON f.id = i.formation_id;",output:"يعرض اسم المتربص واسم التكوين المرتبط بتسجيله، بشرط وجود هذه الجداول والأعمدة.",tip:"تأكد من أن أسماء الجداول والأعمدة تطابق مخطط قاعدة بياناتك.",q:"ما فائدة JOIN؟",opts:["ربط بيانات جداول","حذف جميع قواعد البيانات","تغيير نوع الشاشة"],ans:0,exercise:"ارسم جدولين بينهما علاقة: المتربص والتسجيل، وحدد المفاتيح."}
  ]},
- {id:"html",name:"HTML وCSS",icon:"🌐",category:"تطوير الويب",desc:"أنشئ صفحات ويب منظمة وأضف إليها تنسيقاً جميلاً.",image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=75",
+{
+ id:"html",name:"HTML و CSS",icon:"🌐",desc:"أنشئ صفحات الويب وتعلّم تنسيقها.",
  lessons:[
-  {title:"مقدمة في HTML",intro:"HTML تحدد بنية صفحة الويب مثل العناوين والفقرات والصور.",code:"<h1>مرحبا</h1>\\n<p>هذه أول صفحة لي.</p>",output:"عنوان: مرحبا، ثم فقرة نصية.",explain:"h1 عنوان رئيسي، وp فقرة. المتصفح يعرض العناصر وفق معناها.",tip:"استخدم عنواناً رئيسياً واضحاً لكل صفحة."},
-  {title:"الروابط والصور",intro:"الروابط تنقل المستخدم إلى صفحات أخرى، والصور تضيف محتوى بصرياً.",code:'<a href=\"about.html\">من نحن</a>\\n<img src=\"photo.jpg\" alt=\"صورة توضيحية\">',output:"رابط وصورة عند توفر الملف.",explain:"href يحدد وجهة الرابط، وsrc يحدد مصدر الصورة، وalt يقدم وصفاً بديلاً.",tip:"النص البديل مهم لسهولة الوصول عندما لا تظهر الصورة."},
-  {title:"أساسيات CSS",intro:"CSS تتحكم في ألوان العناصر وأحجامها والمسافات بينها.",code:"body {\\n  background: #101827;\\n  color: white;\\n  font-family: Arial;\\n}",output:"خلفية داكنة ونص أبيض.",explain:"background يحدد الخلفية، وcolor يحدد لون النص، وfont-family يحدد الخط.",tip:"يمكن وضع التنسيقات في ملف منفصل اسمه style.css."},
-  {title:"التصميم المتجاوب",intro:"التصميم المتجاوب يجعل الموقع قابلاً للاستعمال على الهاتف والحاسوب.",code:"@media (max-width: 600px) {\\n  .cards {\\n    grid-template-columns: 1fr;\\n  }\\n}",output:"تظهر البطاقات في عمود واحد على الشاشات الصغيرة.",explain:"media query تسمح بتطبيق قواعد CSS عند تحقق شرط، مثل عرض شاشة صغير.",tip:"اختبر الموقع دائماً على شاشة هاتف فعلية."}
+ {title:"بنية صفحة HTML",body:"HTML لغة توصيف تحدد بنية الصفحة. العنصر html يحتوي الصفحة، وhead للمعلومات، وbody للمحتوى الظاهر.",code:'<!DOCTYPE html>\n<html lang="ar" dir="rtl">\n<head>\n <meta charset="UTF-8">\n <title>صفحتي</title>\n</head>\n<body>\n <h1>مرحبا</h1>\n <p>هذه أول صفحة.</p>\n</body>\n</html>',output:"صفحة فيها عنوان مرحبا وفقرة نصية.",tip:"احفظ الملف بامتداد .html وافتحه في المتصفح.",q:"أين نضع المحتوى الظاهر؟",opts:["body","head فقط","title فقط"],ans:0,exercise:"أنشئ صفحة فيها عنوان باسمك وفقرة قصيرة."},
+ {title:"العناوين والفقرات",body:"العناصر h1 إلى h6 تمثل مستويات العناوين. العنصر p لكتابة فقرة نصية.",code:"<h1>العنوان الرئيسي</h1>\n<h2>عنوان فرعي</h2>\n<p>هذه فقرة.</p>",output:"عنوان رئيسي، عنوان فرعي وفقرة.",tip:"استخدم العناوين حسب ترتيب المحتوى وليس لمجرد تكبير الخط.",q:"أي عنصر يمثل الفقرة؟",opts:["<p>","<img>","<br>"],ans:0,exercise:"اكتب عنوانًا رئيسيًا وعنوانين فرعيين وفقرة."},
+ {title:"الروابط والصور",body:"العنصر a لإنشاء رابط، وimg لإظهار صورة. الخاصية href للرابط وsrc لمسار الصورة.",code:'<a href="https://example.com">افتح الموقع</a>\n<img src="photo.jpg" alt="صورة توضيحية">',output:"رابط وصورة إذا كان الملف photo.jpg موجودًا.",tip:"استعمل alt لوصف الصورة، وتأكد من صحة مسار الملف.",q:"ما الخاصية التي تحدد مصدر الصورة؟",opts:["src","href","class"],ans:0,exercise:"أضف رابطًا إلى موقع تعليمي وصورة من ملفاتك."},
+ {title:"القوائم والجداول",body:"ul تنشئ قائمة غير مرتبة، وol قائمة مرتبة، وli عنصر القائمة. الجداول تستخدم table وtr وth وtd.",code:"<ul>\n <li>Java</li>\n <li>SQL</li>\n</ul>\n<table border=\"1\">\n <tr><th>الاسم</th><th>العلامة</th></tr>\n <tr><td>هاني</td><td>15</td></tr>\n</table>",output:"قائمة تخصصات وجدول بعناوين الاسم والعلامة.",tip:"في المشاريع الحديثة، استعمل CSS لتنسيق حدود الجدول بدل الاعتماد على border.",q:"ما العنصر الذي يمثل صف الجدول؟",opts:["tr","td","ul"],ans:0,exercise:"أنشئ جدولًا فيه ثلاثة متربصين وعلاماتهم."},
+ {title:"مقدمة في CSS",body:"CSS مسؤولة عن شكل الصفحة: الألوان والخطوط والمسافات والتخطيط. يمكن وضعها داخل style أو ملف منفصل.",code:"<style>\nbody { background: #101827; color: white; }\nh1 { color: #38bdf8; }\n</style>\n<h1>مرحبا بالعالم</h1>",output:"خلفية داكنة ونص أبيض وعنوان أزرق.",tip:"الألوان تقبل أسماء أو قيم HEX مثل #38bdf8.",q:"ما دور CSS؟",opts:["تنسيق المظهر","تخزين قواعد البيانات","ترجمة Java"],ans:0,exercise:"غيّر لون العنوان وحجم الخط وأضف مسافة داخلية لعنصر."},
+ {title:"Flexbox والتصميم المتجاوب",body:"Flexbox يساعد على ترتيب العناصر. التصميم المتجاوب يجعل الموقع مناسبًا للشاشات المختلفة باستخدام وحدات مرنة ووسائط CSS.",code:".cards {\n display: flex;\n gap: 12px;\n flex-wrap: wrap;\n}\n@media (max-width: 600px) {\n .cards { flex-direction: column; }\n}",output:"العناصر تصطف في صفوف على الشاشات الواسعة وتتحول إلى عمود على الشاشات الصغيرة.",tip:"اختبر الصفحة على الهاتف، وتجنّب عرضًا ثابتًا كبيرًا يسبب التمرير الأفقي.",q:"ما فائدة flex-wrap؟",opts:["السماح للعناصر بالانتقال لسطر آخر","حذف العناصر","تغيير لغة الصفحة"],ans:0,exercise:"صمّم ثلاث بطاقات تتجاوب مع شاشة الهاتف."}
  ]},
- {id:"uml",name:"UML",icon:"📐",category:"تحليل الأنظمة",desc:"افهم مخططات حالات الاستخدام والأصناف وتسلسل العمليات.",image:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=75",
+{
+ id:"uml",name:"UML",icon:"📐",desc:"نمذجة الأنظمة ومخططات حالات الاستخدام.",
  lessons:[
-  {title:"ما هو UML؟",intro:"UML لغة نمذجة تساعد على تمثيل النظام قبل برمجته.",code:"نظام تسجيل المتربصين\\n   ↓\\nتحليل المستخدمين والوظائف\\n   ↓\\nرسم المخططات",output:"تمثيل بصري يساعد على فهم النظام.",explain:"تساعد المخططات الفريق على الاتفاق على متطلبات النظام وعناصره.",tip:"اختر المخطط حسب السؤال الذي تريد الإجابة عنه."},
-  {title:"مخطط حالات الاستخدام",intro:"Use Case Diagram يوضح الممثلين والوظائف التي يقدمها النظام لهم.",code:"الممثل: مسؤول التسجيل\\nالوظيفة: تسجيل متربص\\nالوظيفة: تعديل ملف متربص",output:"علاقة بين المستخدم ووظائف النظام.",explain:"الممثل Actor قد يكون شخصاً أو نظاماً خارجياً. حالة الاستخدام تمثل وظيفة ينجزها النظام.",tip:"لا تخلط بين المستخدم وبين الوظيفة التي ينفذها النظام."},
-  {title:"مخطط الأصناف",intro:"Class Diagram يعرض الأصناف والخصائص والعمليات والعلاقات.",code:"Student\\n----------------\\nid : int\\nname : String\\n----------------\\nregister()",output:"صنف Student له خصائص وعملية.",explain:"الجزء العلوي للاسم، والوسط للخصائص، والسفلي للعمليات في التمثيل الشائع.",tip:"حدّد العلاقات بين الأصناف قبل بناء قاعدة البيانات."}
+ {title:"ما هي UML؟",body:"UML لغة نمذجة موحّدة لتمثيل الأنظمة قبل أو أثناء تطويرها. تساعد على توضيح المتطلبات والبنية والتفاعلات.",code:"نظام تسجيل المتربصين\nالمستخدمون: مسؤول التسجيل، المتربص\nالوظائف: التسجيل، البحث، تعديل المعلومات",output:"وصف أولي للنظام قبل رسم المخططات.",tip:"UML ليست لغة برمجة؛ هي مجموعة من المخططات لتمثيل النظام.",q:"ما الهدف الأساسي من UML؟",opts:["نمذجة النظام","كتابة SQL فقط","تغيير نظام التشغيل"],ans:0,exercise:"اكتب ثلاثة متطلبات لنظام مكتبة."},
+ {title:"مخطط حالات الاستخدام",body:"Use Case Diagram يوضح الممثلين Actors والوظائف التي يتعاملون معها. الممثل قد يكون شخصًا أو نظامًا خارجيًا.",code:"الممثل: مسؤول التسجيل\nحالات الاستخدام:\n- إضافة متربص\n- البحث عن متربص\n- تعديل بيانات متربص\n- طباعة قائمة",output:"يمكن رسم المسؤول خارج مستطيل النظام، والحالات داخل المستطيل وربطها بخطوط.",tip:"اسم حالة الاستخدام عادة فعل واضح مثل إضافة أو البحث أو طباعة.",q:"ماذا يمثل Actor؟",opts:["جهة تتفاعل مع النظام","جدول SQL","نوع متغير"],ans:0,exercise:"حدّد الممثلين وحالات الاستخدام لنظام مكتبة."},
+ {title:"مخطط الأصناف Class Diagram",body:"Class Diagram يصف الأصناف وخصائصها وعملياتها والعلاقات بينها.",code:"Classe: Stagiaire\n------------------\n- id : int\n- nom : String\n------------------\n+ afficher() : void",output:"صنف اسمه Stagiaire فيه خاصيتان وعملية afficher.",tip:"الرمز - يشير عادة إلى private والرمز + إلى public.",q:"أين نكتب الخصائص؟",opts:["في قسم الخصائص داخل الصنف","خارج كل المخططات دائمًا","في عنوان الصفحة"],ans:0,exercise:"صمّم صنف Livre فيه id وtitre وauteur."},
+ {title:"مخطط التسلسل Sequence",body:"Sequence Diagram يوضح الرسائل بين المشاركين بترتيب زمني، من الأعلى إلى الأسفل غالبًا.",code:"المتربص → واجهة التسجيل: إدخال البيانات\nواجهة التسجيل → النظام: إرسال الطلب\nالنظام → قاعدة البيانات: حفظ البيانات\nقاعدة البيانات → النظام: تأكيد\nالنظام → الواجهة: رسالة نجاح",output:"تسلسل تفاعل يوضح كيف تتم عملية التسجيل.",tip:"ركّز على ترتيب الرسائل ومن يرسلها ومن يستقبلها.",q:"ماذا يوضح Sequence Diagram؟",opts:["ترتيب التفاعلات زمنيًا","ألوان الواجهة","حجم قاعدة البيانات"],ans:0,exercise:"اكتب تسلسلًا من أربع خطوات لتسجيل دخول المستخدم."},
+ {title:"العلاقات والتعددية",body:"العلاقات تربط الأصناف. التعددية مثل 1 و0..1 و0..* و1..* تصف عدد العناصر المرتبطة.",code:"متربص 1 -------- 0..* تسجيل\n\nالمعنى:\nالمتربص قد تكون له عدة تسجيلات.\nكل تسجيل مرتبط بمتربص واحد في هذا النموذج.",output:"علاقة واحد إلى متعدد.",tip:"التعددية تعتمد على قواعد العمل، فلا تختَرها دون فهم النظام.",q:"ماذا تعني 0..*؟",opts:["صفر أو أكثر","عنصر واحد بالضبط","عنصران فقط"],ans:0,exercise:"مثّل العلاقة بين قسم وعدة متربصين."}
  ]},
- {id:"merise",name:"Merise",icon:"🧩",category:"تحليل وتصميم البيانات",desc:"تعلّم تحليل المعلومات ونمذجة البيانات قبل بناء قاعدة البيانات.",image:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=75",
+{
+ id:"merise",name:"Merise",icon:"🧩",desc:"تحليل البيانات وبناء النماذج قبل إنشاء القاعدة.",
  lessons:[
-  {title:"مقدمة في Merise",intro:"Merise منهجية لتحليل وتصميم نظم المعلومات وفصل مستويات الدراسة.",code:"الواقع\\n  ↓\\nتحليل المعلومات\\n  ↓\\nنموذج البيانات\\n  ↓\\nقاعدة البيانات",output:"انتقال من فهم المؤسسة إلى تصميم البيانات.",explain:"نحلل الاحتياجات أولاً ثم نبني النماذج المناسبة قبل التنفيذ.",tip:"اجمع معلومات المؤسسة ومتطلباتها قبل رسم النماذج."},
-  {title:"الكيان والخاصية",intro:"الكيان يمثل شيئاً نريد تخزين معلومات عنه، والخاصية تصف ذلك الكيان.",code:"كيان: متربص\\nخصائص: رقم، اسم، تاريخ ميلاد",output:"كيان متربص مع مجموعة خصائص.",explain:"يجب أن تكون لكل خاصية دلالة واضحة، ويمكن اختيار رقم فريد لتمييز كل متربص.",tip:"لا تكرر المعلومات نفسها في عدة أماكن دون حاجة."},
-  {title:"العلاقات والكاردينالية",intro:"العلاقة تربط بين كيانات، والكاردينالية تحدد عدد المشاركات الممكنة.",code:"متربص  (0,N) —— مسجل في —— (1,1) دورة",output:"مثال توضيحي لعلاقة بين المتربص والدورة؛ الكاردينالية تعتمد على قواعد المؤسسة.",explain:"تحدد القواعد الواقعية ما إذا كان المتربص يمكنه التسجيل في عدة دورات أو لا.",tip:"تحقق من معنى العلاقة مع المؤسسة قبل اعتمادها."}
+ {title:"مقدمة في Merise",body:"Merise منهجية لتحليل وتصميم نظم المعلومات. تفصل بين البيانات والمعالجات وتساعد على الانتقال من دراسة المؤسسة إلى التنفيذ.",code:"دراسة المؤسسة\n↓\nتحديد الكيانات والعلاقات\n↓\nإنشاء نموذج البيانات\n↓\nتحويله إلى جداول",output:"مراحل عامة لبناء قاعدة بيانات.",tip:"ابدأ بفهم العمل والمعلومات المطلوبة قبل إنشاء الجداول.",q:"لماذا نحلل المؤسسة أولًا؟",opts:["لفهم احتياجاتها","لزيادة عدد الجداول فقط","لتغيير الألوان"],ans:0,exercise:"اختر مؤسسة واكتب خمس معلومات تحتاج إلى تخزينها."},
+ {title:"قاموس البيانات",body:"قاموس البيانات جدول يصف كل معلومة: اسمها، معناها، نوعها، طولها، مصدرها وقواعدها.",code:"Nom logique : Nom_Stagiaire\nSignification : اسم المتربص\nType : Texte\nTaille : 50\nObligatoire : Oui",output:"تعريف واضح لحقل اسم المتربص.",tip:"استعمل أسماء واضحة وموحّدة، وتجنّب تكرار المعنى نفسه بأسماء مختلفة.",q:"ما فائدة قاموس البيانات؟",opts:["توحيد فهم البيانات","تشغيل الفيديو","حذف العلاقات"],ans:0,exercise:"أنشئ قاموسًا لحقول id وnom وdate_naissance."},
+ {title:"الكيانات والخصائص",body:"الكيان يمثل شيئًا نحتاج إلى تخزين معلومات عنه مثل متربص أو تكوين أو أستاذ. الخصائص تصف هذا الكيان.",code:"ENTITE : STAGIAIRE\n- id_stagiaire\n- nom\n- prenom\n- date_naissance",output:"كيان STAGIAIRE بأربع خصائص.",tip:"اختر معرّفًا فريدًا لكل كيان، مثل id_stagiaire.",q:"ما مثال الكيان؟",opts:["متربص","عملية جمع","لون النص"],ans:0,exercise:"حدّد خصائص كيان Formation."},
+ {title:"العلاقات وقواعد العمل",body:"العلاقة تصف ارتباط الكيانات. قواعد العمل تحدد كيف يحدث هذا الارتباط وعدد العناصر المسموح بها.",code:"STAGIAIRE — s'inscrit à — FORMATION\n\nقاعدة افتراضية:\nالمتربص يمكنه التسجيل في عدة تكوينات.\nالتكوين يمكن أن يستقبل عدة متربصين.",output:"علاقة متعدد إلى متعدد حسب قاعدة العمل المذكورة.",tip:"قد تحتاج العلاقة متعددة إلى متعدد إلى كيان وسيط عند تحويلها إلى جداول.",q:"ما الذي يحدد نوع العلاقة؟",opts:["قواعد العمل","لون الجدول","اسم الملف"],ans:0,exercise:"اكتب قاعدة عمل تربط الأستاذ بالقسم."},
+ {title:"من MCD إلى MLD",body:"MCD يصف الكيانات والعلاقات بصورة مفاهيمية. MLD يحوّل النموذج إلى بنية منطقية، مثل الجداول والمفاتيح الأساسية والأجنبية.",code:"STAGIAIRE(\n id_stagiaire PK,\n nom\n)\n\nINSCRIPTION(\n id_stagiaire PK, FK,\n id_formation PK, FK,\n date_inscription\n)",output:"جدول وسيط INSCRIPTION يربط المتربص بالتكوين.",tip:"في علاقة متعدد إلى متعدد، يتكون الجدول الوسيط غالبًا من مفاتيح الكيانين.",q:"ما دور FK؟",opts:["ربط جدول بجدول","تلوين النص","ترتيب الصور"],ans:0,exercise:"حوّل علاقة طالب ومادة من متعدد إلى متعدد إلى جداول."}
  ]},
- {id:"excel",name:"Excel",icon:"📊",category:"الجداول الإلكترونية",desc:"نظّم البيانات واستعمل الصيغ والدوال لتحليل المعلومات.",image:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=75",
+{
+ id:"excel",name:"Excel",icon:"📊",desc:"الجداول والصيغ والدوال الأساسية.",
  lessons:[
-  {title:"التعرّف على Excel",intro:"Excel برنامج للجداول الإلكترونية، يفيد في تنظيم البيانات وإجراء الحسابات.",code:"A1 = الاسم\\nB1 = العلامة\\nA2 = Ali\\nB2 = 15",output:"جدول فيه أسماء وعلامات.",explain:"الخلايا تُحدّد بحرف العمود ورقم الصف، مثل A1.",tip:"اجعل عناوين الأعمدة واضحة."},
-  {title:"الجمع باستعمال SUM",intro:"SUM تجمع مجموعة من القيم الرقمية.",code:"=SUM(B2:B6)",output:"مجموع القيم في الخلايا B2 إلى B6.",explain:"النقطتان تعنيان نطاقاً متصلاً من الخلايا.",tip:"تأكد من أن القيم مخزنة كأرقام وليست كنصوص."},
-  {title:"الشرط IF",intro:"IF تختار نتيجة بناء على تحقق شرط.",code:'=IF(B2>=10,"ناجح","راسب")',output:"ناجح إذا كانت العلامة 10 أو أكثر، وإلا راسب.",explain:"الشرط يأتي أولاً، ثم النتيجة إذا كان صحيحاً، ثم النتيجة إذا كان خاطئاً.",tip:"قد تختلف الفواصل بين الوسائط حسب إعدادات لغة Excel."},
-  {title:"ترتيب وتصفية البيانات",intro:"الفرز يرتب السجلات، والتصفية تعرض السجلات التي تحقق شروطاً محددة.",code:"حدّد الجدول ← البيانات ← تصفية",output:"إظهار الصفوف المطابقة للشرط.",explain:"التصفية لا تحذف بقية السجلات؛ إنها تخفي غير المطابق مؤقتاً.",tip:"احتفظ بنسخة من البيانات المهمة قبل أي تعديل كبير."}
+ {title:"التعرّف على Excel",body:"Excel برنامج جداول إلكترونية. الملف يسمى مصنفًا Workbook، ويحتوي أوراق عمل. الخلية هي تقاطع عمود وصف.",code:"A1 = Nom\nB1 = Note\nA2 = Hani\nB2 = 15",output:"جدول بسيط فيه أسماء وعلامات.",tip:"مرجع الخلية يتكون من حرف العمود ورقم الصف، مثل B2.",q:"ما اسم الخلية في العمود C والصف 4؟",opts:["C4","4C","CC"],ans:0,exercise:"أنشئ جدولًا فيه الاسم والعلامة والنتيجة."},
+ {title:"الجمع SUM",body:"الدالة SUM تجمع مجموعة من القيم. في الإعدادات الشائعة، النقطتان تعنيان نطاقًا متصلًا من الخلايا.",code:"=SUM(B2:B6)",output:"مجموع القيم من B2 إلى B6.",tip:"قد تختلف الفواصل بين معاملات الدوال حسب لغة وإعدادات Excel.",q:"ما وظيفة SUM؟",opts:["الجمع","حساب النصوص فقط","حذف الورقة"],ans:0,exercise:"اجمع القيم الموجودة في C2 إلى C10."},
+ {title:"المعدل AVERAGE",body:"AVERAGE تحسب المتوسط الحسابي للقيم الرقمية في نطاق محدد.",code:"=AVERAGE(B2:B6)",output:"معدل القيم الرقمية بين B2 وB6.",tip:"الخلايا الفارغة والنصوص داخل النطاق لا تُعامل عادة كأرقام في المتوسط.",q:"ما وظيفة AVERAGE؟",opts:["حساب المتوسط","إيجاد اللون","إنشاء جدول جديد"],ans:0,exercise:"احسب معدل علامات خمسة متربصين."},
+ {title:"الشرط IF: ناجح أو راسب",body:"IF تختبر شرطًا وتعيد نتيجة إذا كان صحيحًا وأخرى إذا كان خاطئًا. مثال: النجاح عند الحصول على 10 أو أكثر.",code:'=IF(B2>=10,"ناجح","راسب")',output:"إذا كانت B2 تساوي 15 فالنتيجة ناجح؛ وإذا كانت 8 فالنتيجة راسب.",tip:"قد تحتاج إلى الفاصلة المنقوطة بدل الفاصلة حسب إعدادات جهازك.",q:"ماذا تعني B2>=10؟",opts:["القيمة أكبر أو تساوي 10","القيمة تساوي 2 فقط","الخانة فارغة حتمًا"],ans:0,exercise:"اكتب صيغة تعرض ممتاز إذا كانت العلامة 16 أو أكثر، وعادي فيما عدا ذلك."},
+ {title:"العد COUNT و COUNTA",body:"COUNT تحسب الخلايا التي تحتوي أرقامًا، أما COUNTA فتحسب الخلايا غير الفارغة عمومًا.",code:"=COUNT(B2:B20)\n=COUNTA(A2:A20)",output:"الأولى تعدّ الخلايا الرقمية في B، والثانية تعدّ الخلايا غير الفارغة في A.",tip:"اختَر الدالة حسب ما تريد عده: أرقام فقط أم خلايا غير فارغة.",q:"أي دالة تعد الخلايا غير الفارغة؟",opts:["COUNTA","COUNT فقط","SUM"],ans:0,exercise:"احسب عدد العلامات الرقمية في عمود B."},
+ {title:"الفرز والتصفية",body:"الفرز يرتب البيانات تصاعديًا أو تنازليًا. التصفية تعرض السجلات التي تحقق شروطًا محددة.",code:"1. حدّد الجدول مع العناوين.\n2. افتح Data / Données.\n3. اختر Sort أو Filter.\n4. حدّد عمود الفرز أو شرط التصفية.",output:"يمكن ترتيب العلامات من الأعلى للأدنى أو عرض الناجحين فقط.",tip:"تأكد من تحديد الجدول كاملًا حتى لا تنفصل العلامات عن أصحابها.",q:"ما فائدة Filter؟",opts:["عرض السجلات المطابقة لشرط","جمع الأرقام تلقائيًا دائمًا","حذف المصنف"],ans:0,exercise:"رتّب جدول المتربصين حسب العلامة تنازليًا."}
  ]},
- {id:"it",name:"الإعلام الآلي",icon:"💻",category:"أساسيات الحاسوب",desc:"تعرّف على مكونات الحاسوب وأنظمة التشغيل والملفات.",image:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=75",
+{
+ id:"it",name:"أساسيات الإعلام الآلي",icon:"💻",desc:"مكونات الحاسوب ونظام التشغيل والملفات والشبكات.",
  lessons:[
-  {title:"مكونات الحاسوب",intro:"يمكن تقسيم المكونات إلى أجزاء مادية Hardware وبرمجيات Software.",code:"Hardware: شاشة، لوحة مفاتيح، معالج\\nSoftware: نظام تشغيل، تطبيقات",output:"مكونات مادية وبرمجيات تعمل معاً.",explain:"المكونات المادية يمكن لمسها، أما البرمجيات فهي البرامج والتعليمات.",tip:"الذاكرة RAM تختلف عن مساحة التخزين SSD أو HDD."},
-  {title:"أنظمة التشغيل",intro:"نظام التشغيل يدير موارد الجهاز ويسمح بتشغيل التطبيقات.",code:"المستخدم\\n  ↓\\nالتطبيقات\\n  ↓\\nنظام التشغيل\\n  ↓\\nالمكونات المادية",output:"نظام التشغيل وسيط بين البرامج والعتاد.",explain:"من أمثلة أنظمة التشغيل Windows وLinux وAndroid.",tip:"حافظ على تحديث النظام عندما يكون ذلك مناسباً وآمناً."},
-  {title:"الملفات والمجلدات",intro:"المجلدات تنظّم الملفات، والامتداد يساعد على التعرف على نوع الملف.",code:"rapport.docx\\nphoto.jpg\\nprogramme.java",output:"مستند وصورة وملف مصدر Java.",explain:"اسم الملف وامتداده يساعدان البرامج على فتحه بالطريقة المناسبة.",tip:"أنشئ نسخاً احتياطية من ملفات الدراسة المهمة."}
+ {title:"مكونات الحاسوب",body:"يتكون الحاسوب من أجزاء مادية Hardware وبرامج Software. من الأجزاء المادية المعالج والذاكرة والتخزين والشاشة ولوحة المفاتيح.",code:"Hardware: CPU, RAM, SSD, Keyboard\nSoftware: Windows, Browser, Office",output:"أمثلة على المكونات المادية والبرمجيات.",tip:"RAM ذاكرة مؤقتة، أما SSD فيخزن الملفات حتى بعد إيقاف الجهاز.",q:"أي مكوّن يخزن الملفات بشكل دائم نسبيًا؟",opts:["SSD","RAM فقط","الشاشة"],ans:0,exercise:"صنّف الشاشة وWindows وRAM وWord إلى مادي وبرمجي."},
+ {title:"نظام التشغيل",body:"نظام التشغيل يدير موارد الحاسوب، ويشغّل التطبيقات وينظّم الملفات والمستخدمين والأجهزة.",code:"أمثلة:\nWindows\nLinux\nmacOS\nAndroid",output:"أنظمة تشغيل معروفة.",tip:"البرنامج التطبيقي يعمل فوق نظام التشغيل عادةً.",q:"ما وظيفة نظام التشغيل؟",opts:["إدارة موارد الجهاز","تخزين الصور فقط","استبدال المعالج"],ans:0,exercise:"اذكر ثلاث مهام يقوم بها نظام التشغيل."},
+ {title:"الملفات والمجلدات",body:"الملف يحتوي بيانات، والمجلد ينظّم الملفات والمجلدات الفرعية. امتداد الملف يشير عادة إلى نوعه.",code:"rapport.docx\nnotes.txt\nphoto.jpg\npage.html",output:"أمثلة على امتدادات ملفات مختلفة.",tip:"لا تغيّر امتداد الملف يدويًا وتتوقع أن يتحول إلى صيغة أخرى؛ استعمل البرنامج المناسب للحفظ أو التحويل.",q:"ما امتداد صفحة HTML؟",opts:[".html",".mp3",".exe فقط"],ans:0,exercise:"أنشئ مجلدًا باسم Etudes ونظّم فيه ملفاتك."},
+ {title:"الإنترنت والويب",body:"الإنترنت شبكة عالمية تربط شبكات وأجهزة عديدة. الويب خدمة تعمل عبر الإنترنت وتتيح الوصول إلى صفحات مترابطة باستخدام المتصفحات.",code:"Browser → Internet → Web server\nمثال: فتح صفحة تعليمية عبر المتصفح.",output:"المتصفح يطلب محتوى من خادم ويب ثم يعرض الصفحة.",tip:"الإنترنت والويب ليسا المصطلح نفسه؛ الويب إحدى الخدمات التي تستخدم الإنترنت.",q:"هل الويب هو الإنترنت كله؟",opts:["لا، الويب خدمة من خدمات الإنترنت","نعم، هما متطابقان تمامًا","الويب برنامج رسم فقط"],ans:0,exercise:"اكتب الفرق بين الإنترنت والويب في سطرين."},
+ {title:"الشبكات وعناوين IP",body:"الشبكة تربط أجهزة لتبادل البيانات والموارد. عنوان IP يساعد على تحديد واجهة جهاز على شبكة وفق نظام العنونة المستخدم.",code:"مثال IPv4:\n192.168.1.10\n\nأمر Windows لعرض إعدادات الشبكة:\nipconfig",output:"يعرض ipconfig معلومات اتصال الشبكة في Windows.",tip:"العنوان 192.168.x.x شائع في الشبكات المحلية، لكنه ليس عنوانًا عامًا بالضرورة.",q:"ما فائدة الشبكة؟",opts:["تبادل البيانات والموارد","زيادة حجم الشاشة","تغيير نوع المعالج"],ans:0,exercise:"اذكر فائدتين للشبكة في مؤسسة تكوين."},
+ {title:"الحماية والنسخ الاحتياطي",body:"الأمن المعلوماتي يحمي البيانات والأجهزة. النسخ الاحتياطي ينشئ نسخة إضافية يمكن استخدامها عند فقدان الملفات.",code:"قاعدة عملية:\n- استعمل كلمة مرور قوية وفريدة.\n- حدّث النظام والبرامج.\n- احتفظ بنسخة احتياطية.\n- لا تفتح مرفقات مشبوهة.",output:"عادات أساسية لتقليل المخاطر.",tip:"احتفظ بنسخة احتياطية على وسيط منفصل أو خدمة موثوقة، واختبر إمكانية استرجاعها.",q:"ما فائدة النسخ الاحتياطي؟",opts:["استرجاع البيانات عند فقدانها","زيادة سرعة الإنترنت دائمًا","إلغاء الحاجة إلى كلمات المرور"],ans:0,exercise:"ضع خطة بسيطة لنسخ ملفات الدراسة المهمة احتياطيًا."}
  ]}
 ];
 
-let currentCourse=null,currentLesson=0;
-const $=id=>document.getElementById(id);
-const views=["homeView","subjectView","lessonView"];
-function showView(id){
-  views.forEach(v=>$(v).classList.toggle("active",v===id));
-  window.scrollTo({top:0,behavior:"smooth"});
+const $ = id => document.getElementById(id);
+let activeCourse = null;
+let activeIndex = 0;
+let completed = loadCompleted();
+
+function loadCompleted(){
+  try { return JSON.parse(localStorage.getItem("talibDZ_completed") || "[]"); }
+  catch(e){ return []; }
 }
-function getProgress(){
-  try{return JSON.parse(localStorage.getItem("studentDZProgress")||"{}")}catch(e){return {}}
+function saveCompleted(){
+  try { localStorage.setItem("talibDZ_completed", JSON.stringify(completed)); }
+  catch(e){}
 }
-function saveProgress(){
-  const p=getProgress();
-  p[currentCourse.id]=Math.max(p[currentCourse.id]||0,currentLesson+1);
-  localStorage.setItem("studentDZProgress",JSON.stringify(p));
+function keyFor(c,i){ return c.id + ":" + i; }
+function totalLessons(){
+  return courses.reduce((n,c)=>n+c.lessons.length,0);
+}
+function updateProgress(){
+  const total = totalLessons();
+  const percent = total ? Math.round(completed.length / total * 100) : 0;
+  $("progressText").textContent = percent + "%";
+  $("progressBar").style.width = percent + "%";
+  $("lessonCount").textContent = total;
 }
 function renderCourses(filter=""){
-  const grid=$("courseGrid");grid.innerHTML="";
-  const query=filter.trim().toLowerCase();
-  let count=0;
-  courses.filter(c=>(c.name+" "+c.category+" "+c.desc).toLowerCase().includes(query)).forEach(c=>{
-    count++;
-    const card=document.createElement("article");card.className="course";
-    const art=document.createElement("div");art.className="course-art";
-    const img=document.createElement("img");img.src=c.image;img.alt="صورة مرتبطة بمادة "+c.name;img.loading="lazy";
-    img.onerror=()=>{img.remove();art.style.background="linear-gradient(135deg,#263b5d,#182335)";};
-    const icon=document.createElement("span");icon.className="course-icon";icon.textContent=c.icon;
-    art.append(img,icon);
-    const body=document.createElement("div");body.className="course-body";
-    const meta=document.createElement("div");meta.className="course-meta";meta.textContent=c.category;
-    const title=document.createElement("h3");title.textContent=c.name;
-    const desc=document.createElement("p");desc.textContent=c.desc;
-    const bottom=document.createElement("div");bottom.className="course-bottom";
-    const badge=document.createElement("span");badge.className="badge";badge.textContent=c.lessons.length+" دروس تجريبية";
-    const btn=document.createElement("button");btn.className="course-open";btn.textContent="دخول المادة ←";btn.onclick=()=>openCourse(c.id);
-    bottom.append(badge,btn);body.append(meta,title,desc,bottom);card.append(art,body);grid.append(card);
+  const f = filter.trim().toLowerCase();
+  $("courseGrid").innerHTML = "";
+  courses.forEach(c=>{
+    const matchingLessons = c.lessons.filter(l =>
+      (l.title + " " + l.body + " " + c.name).toLowerCase().includes(f)
+    );
+    if(f && !matchingLessons.length) return;
+    const card = document.createElement("div");
+    card.className = "course";
+    card.innerHTML = `
+      <div class="icon">${c.icon}</div>
+      <h3>${c.name}</h3>
+      <p>${c.desc}</p>
+      <p>📖 ${c.lessons.length} دروس</p>
+      <button class="btn primary">ابدأ التعلّم ←</button>`;
+    card.querySelector("button").addEventListener("click",()=>openCourse(c, f));
+    $("courseGrid").appendChild(card);
   });
-  $("emptySearch").style.display=count?"none":"block";
-}
-function openCourse(id){
-  currentCourse=courses.find(c=>c.id===id);if(!currentCourse)return;
-  $("subjectTitle").textContent=currentCourse.name;
-  $("subjectDescription").textContent=currentCourse.desc;
-  $("subjectIcon").textContent=currentCourse.icon;
-  $("subjectCount").textContent=currentCourse.lessons.length+" دروس";
-  const list=$("lessonList");list.innerHTML="";
-  const progress=getProgress()[id]||0;
-  currentCourse.lessons.forEach((l,i)=>{
-    const b=document.createElement("button");b.className="lesson-item";
-    const n=document.createElement("span");n.className="lesson-number";n.textContent=String(i+1).padStart(2,"0");
-    const info=document.createElement("span");info.className="lesson-info";
-    const strong=document.createElement("strong");strong.textContent=l.title;
-    const small=document.createElement("small");small.textContent=i<progress?"✓ تقدّمت في هذا الدرس":"شرح ومثال تطبيقي";
-    info.append(strong,small);
-    const arrow=document.createElement("span");arrow.className="arrow";arrow.textContent="←";
-    b.append(n,info,arrow);b.onclick=()=>openLesson(i);list.append(b);
-  });
-  showView("subjectView");
-}
-function openLesson(i){
-  currentLesson=Math.max(0,Math.min(i,currentCourse.lessons.length-1));
-  const l=currentCourse.lessons[currentLesson];
-  $("lessonTitle").textContent=l.title;
-  $("lessonSubjectLabel").textContent=currentCourse.name+" · الطالب DZ";
-  $("lessonBreadcrumb").textContent=currentCourse.name+" / الدروس";
-  $("lessonNumber").textContent="الدرس "+(currentLesson+1);
-  $("lessonPosition").textContent=(currentLesson+1)+" / "+currentCourse.lessons.length;
-  $("lessonProgress").style.width=((currentLesson+1)/currentCourse.lessons.length*100)+"%";
-  $("prevLesson").disabled=currentLesson===0;
-  $("nextLesson").disabled=currentLesson===currentCourse.lessons.length-1;
-  const content=$("lessonContent");content.innerHTML="";
-  addText(content,"h2","الفكرة الأساسية");
-  addText(content,"p",l.intro);
-  addText(content,"h2","مثال تطبيقي");
-  const pre=document.createElement("pre");pre.className="codebox";
-  pre.textContent=l.code.replace(/\\n/g,"\n");content.append(pre);
-  addText(content,"h2","الشرح");
-  addText(content,"p",l.explain);
-  addText(content,"h2","النتيجة أو الفائدة");
-  const out=document.createElement("div");out.className="output";out.textContent=l.output;content.append(out);
-  const tip=document.createElement("div");tip.className="tip";tip.textContent="💡 نصيحة: "+l.tip;content.append(tip);
-  const quiz=document.createElement("div");quiz.className="quiz";
-  addText(quiz,"strong","اختبر فهمك");
-  addText(quiz,"p","ما أفضل طريقة للتعلّم بعد قراءة المثال؟");
-  const result=document.createElement("div");result.className="quiz-result";result.setAttribute("aria-live","polite");
-  ["حفظ الكود دون فهمه","تجربة المثال وتغيير القيم وملاحظة النتيجة","تجاوز المثال مباشرة"].forEach((answer,i)=>{
-    const b=document.createElement("button");b.textContent=answer;
-    b.onclick=()=>{
-      result.textContent=i===1?"إجابة صحيحة! التجربة والتعديل يساعدانك على الفهم.":"حاول مرة أخرى: جرّب المثال وغيّر القيم ولاحظ ما يحدث.";
-      result.style.color=i===1?"#54d6a0":"#ffbf75";
-    };quiz.append(b);
-  });
-  quiz.append(result);content.append(quiz);
-  saveProgress();showView("lessonView");
-}
-function addText(parent,tag,text){
-  const el=document.createElement(tag);el.textContent=text;parent.append(el);return el;
-}
-$("homeButton").onclick=()=>showView("homeView");
-$("logoHome").onclick=e=>{e.preventDefault();showView("homeView")};
-$("backHome").onclick=()=>showView("homeView");
-$("backLessons").onclick=()=>openCourse(currentCourse.id);
-$("prevLesson").onclick=()=>{if(currentLesson>0)openLesson(currentLesson-1)};
-$("nextLesson").onclick=()=>{if(currentLesson<currentCourse.lessons.length-1)openLesson(currentLesson+1)};
-$("searchInput").addEventListener("input",e=>renderCourses(e.target.value));
-
-let startX=null,startY=null;
-const swipeArea=$("lessonSwipeArea");
-swipeArea.addEventListener("touchstart",e=>{
-  if(e.touches.length===1){startX=e.touches[0].clientX;startY=e.touches[0].clientY;}
-},{passive:true});
-swipeArea.addEventListener("touchend",e=>{
-  if(startX===null)return;
-  const dx=e.changedTouches[0].clientX-startX;
-  const dy=e.changedTouches[0].clientY-startY;
-  if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.3){
-    if(dx<0&&currentLesson<currentCourse.lessons.length-1)openLesson(currentLesson+1);
-    if(dx>0&&currentLesson>0)openLesson(currentLesson-1);
+  if(!$("courseGrid").children.length){
+    $("courseGrid").innerHTML="<p>لم نجد دروسًا مطابقة لبحثك.</p>";
   }
-  startX=null;startY=null;
+}
+function openCourse(c, filter=""){
+  activeCourse = c;
+  const matching = c.lessons.map((l,i)=>({l,i})).filter(x=>
+    !filter || (x.l.title+" "+x.l.body+" "+c.name).toLowerCase().includes(filter.toLowerCase())
+  );
+  activeIndex = matching.length ? matching[0].i : 0;
+  $("homeView").classList.add("hidden");
+  $("lessonView").classList.remove("hidden");
+  $("courseLabel").textContent = c.icon + " " + c.name;
+  $("lessonList").innerHTML = "";
+  c.lessons.forEach((l,i)=>{
+    const b = document.createElement("button");
+    b.className = "lesson-link";
+    b.textContent = (completed.includes(keyFor(c,i)) ? "✅ " : "📘 ") + (i+1)+". "+l.title;
+    b.addEventListener("click",()=>showLesson(i));
+    $("lessonList").appendChild(b);
+  });
+  showLesson(activeIndex);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showLesson(i){
+  if(!activeCourse) return;
+  activeIndex = Math.max(0,Math.min(i,activeCourse.lessons.length-1));
+  const l = activeCourse.lessons[activeIndex];
+  document.querySelectorAll(".lesson-link").forEach((b,j)=>{
+    b.classList.toggle("active",j===activeIndex);
+    b.textContent = (completed.includes(keyFor(activeCourse,j)) ? "✅ " : "📘 ") + (j+1)+". "+activeCourse.lessons[j].title;
+  });
+  const done = completed.includes(keyFor(activeCourse,activeIndex));
+  $("lessonContent").innerHTML = `
+    <div style="color:var(--muted)">الدرس ${activeIndex+1} من ${activeCourse.lessons.length}</div>
+    <h1>${l.title}</h1>
+    <div class="note">🎯 <strong>هدف الدرس:</strong> ${l.body}</div>
+    <h2>📖 الشرح</h2>
+    <p>${l.body}</p>
+    <h2>💻 مثال تطبيقي</h2>
+    <pre><code></code></pre>
+    <h2>📌 النتيجة أو التفسير</h2>
+    <div class="output"></div>
+    <div class="note">💡 <strong>نصيحة:</strong> ${l.tip}</div>
+    <div class="exercise">
+      <h2>✍️ تمرين تطبيقي</h2>
+      <p>${l.exercise}</p>
+      <details><summary>إظهار توجيه للمساعدة</summary><p>جرّب بنفسك أولًا، ثم قارن النتيجة مع المثال في الدرس وعدّل الحل حسب المطلوب.</p></details>
+    </div>
+    <div class="quiz">
+      <h2>🧠 اختبر فهمك</h2>
+      <p>${l.q}</p>
+      <div id="quizOptions"></div>
+      <div id="quizFeedback" class="feedback" aria-live="polite"></div>
+    </div>
+    <button id="completeBtn" class="btn ${done?"":"primary"}" style="margin-top:18px">${done?"✅ أكملت هذا الدرس":"✔ علّم الدرس كمكتمل"}</button>
+    <div class="lesson-nav">
+      <button id="prevBtn" class="btn" ${activeIndex===0?"disabled":""}>→ الدرس السابق</button>
+      <button id="nextBtn" class="btn primary" ${activeIndex===activeCourse.lessons.length-1?"disabled":""}>الدرس التالي ←</button>
+    </div>`;
+  $("lessonContent").querySelector("pre code").textContent = l.code;
+  $("lessonContent").querySelector(".output").textContent = l.output;
+  const options = $("quizOptions");
+  l.opts.forEach((opt,j)=>{
+    const b=document.createElement("button");
+    b.textContent=String.fromCharCode(65+j)+". "+opt;
+    b.addEventListener("click",()=>{
+      $("quizFeedback").textContent = j===l.ans ? "✅ إجابة صحيحة، أحسنت!" : "❌ ليست الإجابة الصحيحة، جرّب مرة أخرى.";
+      $("quizFeedback").style.color = j===l.ans ? "var(--green)" : "#fb7185";
+    });
+    options.appendChild(b);
+  });
+  $("completeBtn").addEventListener("click",()=>{
+    const k=keyFor(activeCourse,activeIndex);
+    if(!completed.includes(k)) completed.push(k);
+    saveCompleted();
+    updateProgress();
+    showLesson(activeIndex);
+  });
+  $("prevBtn").addEventListener("click",()=>showLesson(activeIndex-1));
+  $("nextBtn").addEventListener("click",()=>showLesson(activeIndex+1));
+}
+function goHome(){
+  $("lessonView").classList.add("hidden");
+  $("homeView").classList.remove("hidden");
+  activeCourse=null;
+  renderCourses($("search").value);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+$("search").addEventListener("input",e=>renderCourses(e.target.value));
+$("homeBtn").addEventListener("click",goHome);
+$("backBtn").addEventListener("click",goHome);
+$("themeBtn").addEventListener("click",()=>document.body.classList.toggle("light"));
+
+let touchStartX=0, touchStartY=0;
+$("lessonView").addEventListener("touchstart",e=>{
+  if(e.touches.length===1){
+    touchStartX=e.touches[0].clientX;
+    touchStartY=e.touches[0].clientY;
+  }
+},{passive:true});
+$("lessonView").addEventListener("touchend",e=>{
+  if(!activeCourse || !e.changedTouches.length) return;
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(dx)>80 && Math.abs(dx)>Math.abs(dy)*1.3){
+    if(dx<0 && activeIndex<activeCourse.lessons.length-1) showLesson(activeIndex+1);
+    if(dx>0 && activeIndex>0) showLesson(activeIndex-1);
+  }
 },{passive:true});
 
-$("themeButton").onclick=()=>{
-  const root=document.documentElement;
-  const light=root.dataset.theme!=="light";
-  root.dataset.theme=light?"light":"dark";
-  if(light){
-    root.style.setProperty("--bg","#f3f6fb");
-    root.style.setProperty("--panel","#ffffff");
-    root.style.setProperty("--card","#ffffff");
-    root.style.setProperty("--border","#d9e1ed");
-    root.style.setProperty("--text","#172235");
-    root.style.setProperty("--muted","#64748b");
-    $("themeButton").textContent="☀";
-  }else{
-    ["--bg","--panel","--card","--border","--text","--muted"].forEach(p=>root.style.removeProperty(p));
-    $("themeButton").textContent="☾";
-  }
-};
+document.addEventListener("keydown",e=>{
+  if($("lessonView").classList.contains("hidden")) return;
+  if(e.key==="ArrowLeft" && activeCourse) showLesson(activeIndex+1);
+  if(e.key==="ArrowRight" && activeCourse) showLesson(activeIndex-1);
+});
+
+updateProgress();
 renderCourses();
 </script>
 </body>
